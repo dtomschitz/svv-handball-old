@@ -1,0 +1,22 @@
+<dialog (closeDialog)="close()">
+  <dialog-title> Kategorie {{ isCreateDialog ? 'erstellen' : 'bearbeiten' }} </dialog-title>
+  <dialog-body>
+    <form autocomplete="off" [formGroup]="categoryForm" errorGroupName="createCategory">
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input formControlName="name" matInput />
+        <mat-error errorTailor></mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Link</mat-label>
+        <input formControlName="link" matInput />
+      </mat-form-field>
+    </form>
+  </dialog-body>
+  <dialog-actions>
+    <button (click)="close()" mat-button>Abbrechen</button>
+    <button color="primary" [disabled]="invalidOrNotDirty" [mat-dialog-close]="categoryForm.value" mat-flat-button>
+      Speichern
+    </button>
+  </dialog-actions>
+</dialog>

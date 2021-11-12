@@ -1,0 +1,26 @@
+<ng-container *ngIf="loading; else loaded">
+  <mat-expansion-panel disabled>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <shimmer-placeholder></shimmer-placeholder>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+  </mat-expansion-panel>
+</ng-container>
+<ng-template #loaded>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>{{ contactPerson.name }}</mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-list>
+      <mat-list-item>
+        <mat-icon mat-list-icon>email</mat-icon>
+        <a href="mailto:{{ contactPerson.email }}" mat-line>{{ contactPerson.email }}</a>
+      </mat-list-item>
+      <mat-list-item *ngIf="contactPerson.people">
+        <mat-icon mat-list-icon>people</mat-icon>
+        <div mat-line>{{ contactPerson.people | oxfordJoin }}</div>
+      </mat-list-item>
+    </mat-list>
+  </mat-expansion-panel>
+</ng-template>

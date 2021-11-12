@@ -1,0 +1,53 @@
+<sidenav>
+  <sidenav-section>
+    <sidenav-section-heading>Hauptverein</sidenav-section-heading>
+    <a href="https://www.sportverein-vaihingen.de/">
+      <img src="assets/svvaihingen.jpg" alt="Sportverein Vaihingen Banner" width="175" height="56" loading="lazy" />
+    </a>
+  </sidenav-section>
+  <sidenav-section>
+    <sidenav-section-heading>Vereinspartner</sidenav-section-heading>
+    <a href="https://tvb1898.de/">
+      <img src="assets/tvb.jpg" alt="TVB Stuttgart Logo" width="150" height="52" loading="lazy" />
+    </a>
+  </sidenav-section>
+  <sidenav-section>
+    <sidenav-section-heading>Handballverband Württemberg</sidenav-section-heading>
+    <a href="https://www.hvw-online.org/home/">
+      <img src="assets/hvw.jpg" alt="HVW Logo" width="145" height="56" loading="lazy" />
+    </a>
+  </sidenav-section>
+  <sidenav-section>
+    <sidenav-section-heading>Sponsoren</sidenav-section-heading>
+    <button class="sidenav-button" (click)="navigate.emit('sponsoren')" mat-flat-button>
+      <mat-icon>campaign</mat-icon>
+      <div class="text">Jetzt sponsor werden</div>
+    </button>
+  </sidenav-section>
+  <sidenav-section>
+    <sidenav-section-heading>Downloads</sidenav-section-heading>
+    <a class="sidenav-button" href="https://www.svv-handball.de/docs/Konzept_Trainingsaufnahme_Handball_V2.7.pdf"
+      target="_blank" mat-flat-button>
+      <mat-icon>coronavirus</mat-icon>
+      <div class="text">Hygienekonzept</div>
+    </a>
+    <a class="sidenav-button" href="https://www.svv-handball.de/docs/Zusammenfassung_Mindchange.pdf" target="_blank"
+      mat-flat-button>
+      <mat-icon>psychology</mat-icon>
+      <div class="text">Mindchange</div>
+    </a>
+    <a class="sidenav-button" href="https://www.svv-handball.de/docs/Saisonheft_2021_2022.pdf" target="_blank"
+      mat-flat-button>
+      <mat-icon>menu_book</mat-icon>
+      <div class="text">Hallenheft 2021/2022</div>
+    </a>
+  </sidenav-section>
+  <sidenav-section>
+    <sidenav-section-heading>Förderverein</sidenav-section-heading>
+    <a routerLink="downloads">
+      <img src="assets/foerderverein.jpg" width="175" height="175" alt="SV Vaihingen Handball Förderverein Logo"
+        loading="lazy" />
+    </a>
+    <amazon-smile></amazon-smile>
+  </sidenav-section>
+</sidenav>

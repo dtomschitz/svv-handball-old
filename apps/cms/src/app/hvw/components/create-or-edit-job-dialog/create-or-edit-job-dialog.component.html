@@ -1,0 +1,38 @@
+<dialog (closeDialog)="close()">
+  <dialog-title> CronJob {{ isCreateDialog ? 'erstellen' : 'bearbeiten' }} </dialog-title>
+  <dialog-body>
+    <form autocomplete="off" [formGroup]="jobForm" errorGroupName="createOrEditJob">
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input formControlName="name" matInput />
+        <mat-error errorTailor></mat-error>
+      </mat-form-field>
+      <mat-form-field *ngIf="isCreateDialog">
+        <mat-label>Typ</mat-label>
+        <mat-select formControlName="type">
+          <mat-option *ngFor="let option of cachingOptions" [value]="option.value">
+            {{ option.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error errorTailor></mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Cron Ausdruck</mat-label>
+        <input formControlName="cronExpression" [matAutocomplete]="auto" matInput />
+        <mat-error errorTailor></mat-error>
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+          <mat-option *ngFor="let option of filteredCronOptions$ | async" [value]="option.key"
+            [matTooltip]="option.text">
+            {{ option.text }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </form>
+  </dialog-body>
+  <dialog-actions>
+    <button (click)="close()" mat-button>Abbrechen</button>
+    <button color="primary" [disabled]="invalidOrNotDirty" [mat-dialog-close]="jobForm.value" mat-flat-button>
+      Speichern
+    </button>
+  </dialog-actions>
+</dialog>

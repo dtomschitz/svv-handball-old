@@ -1,0 +1,17 @@
+<h1>Sponsoren</h1>
+<p class="thx">
+  Wir danken allen Sponsoren, die uns diese Saison unterstützen!
+</p>
+<div class="sponsors">
+  <ng-container *ngxLet="error$ as error">
+    <ng-container *ngIf="!error; else errorCallout">
+      <sponsor *ngFor="let sponsor of sponsors$ | async" [sponsor]="sponsor"></sponsor>
+    </ng-container>
+    <ng-template #errorCallout>
+      <callout type="WARN">
+        Die Sponsoren konnten nicht geladen werden!
+      </callout>
+    </ng-template>
+  </ng-container>
+</div>
+<sponsors-contact></sponsors-contact>

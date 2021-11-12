@@ -1,0 +1,99 @@
+<dialog (closeDialog)="close()">
+  <dialog-title> Mannschaft {{ isCreateDialog ? 'erstellen' : 'bearbeiten' }} </dialog-title>
+  <dialog-body>
+    <form autocomplete="off" [formGroup]="teamForm" errorGroupName="editTeam">
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input formControlName="name" matInput />
+        <mat-error errorTailor></mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Abkürzung</mat-label>
+        <input formControlName="abbreviation" matInput />
+        <mat-error errorTailor></mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Geschlecht auswählen</mat-label>
+        <mat-select formControlName="gender">
+          <mat-option *ngFor="let gender of genders" [value]="gender.value">
+            {{ gender.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error errorTailor></mat-error>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="!isCreateDialog">
+        <mat-label>Typ auswählen</mat-label>
+        <mat-select formControlName="type">
+          <mat-option *ngFor="let type of types" [value]="type.value">{{ type.name }}</mat-option>
+        </mat-select>
+        <mat-error errorTailor></mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Kontakt</mat-label>
+        <input formControlName="contact" [matAutocomplete]="contactAuto" matInput />
+        <mat-error errorTailor></mat-error>
+        <mat-autocomplete #contactAuto="matAutocomplete">
+          <mat-option *ngFor="let contact of filteredContactOptions$ | async" [value]="contact">
+            {{ contact }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <div class="title">Bericht Einstellungen</div>
+      <div class="section">
+        <mat-form-field>
+          <mat-select formControlName="articleCategoryId" placeholder="Bericht Kategorie auswählen">
+            <mat-option>
+              <ngx-mat-select-search [formControl]="articleCategorySearchControl"
+                placeholderLabel="Bericht Kategorie auswählen..."
+                noEntriesFoundLabel="Es wurde kein Kategorien gefunden">
+              </ngx-mat-select-search>
+            </mat-option>
+            <mat-option *ngFor="let articleCategory of filteredArticleCategories$ | async"
+              [value]="articleCategory._id">
+              {{ articleCategory.name }}
+            </mat-option>
+          </mat-select>
+          <mat-hint *ngIf="classes.length === 0">Es wurden keine Kategorien gefunden!</mat-hint>
+        </mat-form-field>
+        <button *ngIf="isArticleCategorySelected" class="delete" (click)="clearSelectedArticleCategory()"
+          mat-icon-button>
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+
+      <div class="title">HVW Einstellungen</div>
+      <div class="section">
+        <mat-form-field>
+          <mat-label>Spielklasse auswählen</mat-label>
+          <mat-select formControlName="classId">
+            <mat-option *ngFor="let class of classes" [value]="class._id">
+              {{ class.longName }} ({{ class.shortName }})
+            </mat-option>
+          </mat-select>
+          <mat-hint *ngIf="classes.length === 0">Es wurden keine Spielklassen gefunden!</mat-hint>
+          <mat-error errorTailor></mat-error>
+        </mat-form-field>
+        <button *ngIf="isClassSelected" class="delete" (click)="clearSelectedClass()" mat-icon-button>
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+      <div class="hvw-settings" formGroupName="settings">
+        <mat-slide-toggle color="primary" formControlName="cacheGames">Alle Spiele der Mannschaft werden gespeichert
+        </mat-slide-toggle>
+        <mat-slide-toggle color="primary" formControlName="cacheTable">Die Tabelle der Mannschaft wird gespeichert
+        </mat-slide-toggle>
+      </div>
+    </form>
+  </dialog-body>
+  <dialog-actions>
+    <button (click)="close()" mat-button>Abbrechen</button>
+    <button color="primary" [disabled]="invalidOrNotDirty" [mat-dialog-close]="teamForm.value" mat-flat-button>
+      Speichern
+    </button>
+  </dialog-actions>
+</dialog>

@@ -1,0 +1,82 @@
+<ng-container *ngIf="loading; else loaded">
+  <mat-card class="mat-elevation-z3">
+    <div class="datetime">
+      <div *ngIf="showClass; else date" class="class">
+        <mat-icon>label</mat-icon>
+        <span>
+          <shimmer-placeholder></shimmer-placeholder>
+        </span>
+      </div>
+      <ng-template #date>
+        <div class="date">
+          <mat-icon>event</mat-icon>
+          <span>
+            <shimmer-placeholder></shimmer-placeholder>
+          </span>
+        </div>
+      </ng-template>
+      <div class="time">
+        <mat-icon>alarm</mat-icon>
+        <span>
+          <shimmer-placeholder></shimmer-placeholder>
+        </span>
+      </div>
+    </div>
+    <div class="teams">
+      <span class="team">
+        <shimmer-placeholder></shimmer-placeholder>
+      </span>
+      <span class="team">
+        <shimmer-placeholder></shimmer-placeholder>
+      </span>
+    </div>
+    <div class="score">
+      <span>
+        <shimmer-placeholder></shimmer-placeholder>
+      </span>
+      <span>
+        <shimmer-placeholder></shimmer-placeholder>
+      </span>
+    </div>
+  </mat-card>
+</ng-container>
+<ng-template #loaded>
+  <mat-card class="mat-elevation-z3" (click)="openGameInfo()" matRipple>
+    <div class="datetime">
+      <div *ngIf="showClass; else date" class="class">
+        <mat-icon>label</mat-icon>
+        <span>{{ game?.class?.shortName }}</span>
+      </div>
+      <ng-template #date>
+        <div *ngIf="game.date" class="date">
+          <mat-icon>event</mat-icon>
+          <ng-container *ngIf="isValidDate(game.date); else invalidDate">
+            <span>{{ game.date }}</span>
+          </ng-container>
+          <ng-template #invalidDate>
+            <span>Unbekannt</span>
+          </ng-template>
+        </div>
+      </ng-template>
+
+      <div *ngIf="game.time" class="time">
+        <mat-icon>alarm</mat-icon>
+        <span>{{ game.time }} Uhr</span>
+      </div>
+    </div>
+
+    <div class="teams">
+      <span class="team" [class.highlighted]="isHomeTeam(game.teams.home.name)">
+        {{ isHomeTeam(game.teams.home.name) && game.team ? game.team.name : game.teams.home.name }}
+      </span>
+      <span class="team" [class.highlighted]="isHomeTeam(game.teams.guest.name)">
+        {{ isHomeTeam(game.teams.guest.name) && game.team ? game.team.name : game.teams.guest.name }}
+      </span>
+    </div>
+
+    <div class="score">
+      <span [style.color]="getScoreClass(game)">{{ game.teams.home.goals || 100 }}</span>
+      <span [style.color]="getScoreClass(game)">{{ game.teams.guest.goals || 100 }}</span>
+    </div>
+  </mat-card>
+</ng-template>

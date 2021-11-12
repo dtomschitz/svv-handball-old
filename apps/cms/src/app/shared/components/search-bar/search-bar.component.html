@@ -1,0 +1,5 @@
+<div class="search-bar" [class.search-bar-active]="focused">
+  <mat-icon>search</mat-icon>
+  <input class="search-bar-input" (focus)="focused = true" (focusout)="focused = false"
+    (keyup)="valueChange.emit($event.target.value)" [placeholder]="placeholder" />
+</div>

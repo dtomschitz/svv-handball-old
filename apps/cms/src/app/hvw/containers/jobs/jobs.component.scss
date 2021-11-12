@@ -1,0 +1,35 @@
+.mat-column-name {
+  max-width: 400px;
+
+  .mat-cell-wrapper {
+    display: flex;
+    align-items: center;
+
+    mat-chip {
+      margin: 0 6px 0 0;
+    }
+
+    span {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}
+
+.mat-column-type {
+  max-width: 150px;
+}
+
+.mat-column-cronExpression {
+  max-width: 150px;
+}
+
+.mat-column-_id {
+  max-width: 190px;
+}
+
+.mat-column-actions {
+  max-width: 80px;
+}

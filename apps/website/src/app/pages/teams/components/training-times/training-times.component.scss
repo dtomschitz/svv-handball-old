@@ -1,0 +1,17 @@
+.training-times {
+  .training-time {
+    display: flex;
+    height: 16px;
+  }
+
+  .location {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .time {
+    color: var(--text-inactive);
+    margin-left: 8px;
+    min-width: 116px;
+  }
+}

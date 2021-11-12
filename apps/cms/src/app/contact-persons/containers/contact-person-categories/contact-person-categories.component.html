@@ -1,0 +1,72 @@
+<div class="content-container">
+  <ng-container *ngrxLet="categories$ as categories">
+    <data-table [data]="categories" [loading]="loading$ | ngrxPush" [displayedColumns]="displayedColumns"
+      searchPlaceholder="Nach Name oder Kategorie-ID suchen">
+      <data-table-actions>
+        <button color="primary" (click)="createCategory(categories.length)" mat-flat-button>
+          Kategorie erstellen
+        </button>
+
+        <button (click)="sortCategories(categories)" [disabled]="categories.length < 2" matTooltip="Sortien"
+          mat-icon-button>
+          <mat-icon>sort</mat-icon>
+        </button>
+        <button (click)="refreshCategories()" matTooltip="Aktualisieren" mat-icon-button>
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </data-table-actions>
+
+      <data-table-no-data>
+        <mat-icon>info</mat-icon>
+        Es wurden keine Kategorien gefunden!
+      </data-table-no-data>
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef>
+          <div class="header-cell-wrapper">Name</div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let category">
+          <div class="mat-cell-wrapper">
+            {{ category.name }}
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="_id">
+        <mat-header-cell *matHeaderCellDef>
+          <div class="header-cell-wrapper">Kategorie-UID</div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let category">
+          <div class="mat-cell-wrapper" matTooltip="{{ category._id }}">
+            {{ category._id }}
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let category">
+          <button class="copy-button" (click)="copyCategoryId($event)" [cdkCopyToClipboard]="category._id"
+            matTooltip="UID kopieren" mat-icon-button>
+            <mat-icon>content_copy</mat-icon>
+          </button>
+          <button [matMenuTriggerFor]="menu" (click)="preventDefault($event)" matTooltip="Weitere Optionen anzeigen"
+            mat-icon-button>
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button (click)="editCategory(category)" mat-menu-item>
+              <mat-icon>edit</mat-icon>
+              <span>Bearbeiten</span>
+            </button>
+            <mat-divider></mat-divider>
+            <button (click)="deleteCategory(category)" mat-menu-item>
+              <mat-icon>delete_forever</mat-icon>
+              <span>Löschen</span>
+            </button>
+          </mat-menu>
+        </mat-cell>
+      </ng-container>
+    </data-table>
+  </ng-container>
+</div>

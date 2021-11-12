@@ -1,0 +1,40 @@
+.mat-column-id {
+  max-width: 80px;
+}
+
+.mat-column-_id {
+  max-width: 200px;
+}
+
+.mat-column-actions {
+  max-width: 40px;
+}
+
+.mat-column-shortName {
+  max-width: 115px;
+}
+
+.mat-column-longNmae {
+  flex-grow: 1;
+}
+
+mat-expansion-panel.mat-expansion-panel {
+  border-radius: 8px;
+  max-width: 904px;
+  margin: 16px;
+
+  .mat-expansion-panel-header-title {
+    flex-grow: 0;
+  }
+
+  .mat-expansion-panel-header-title,
+  .mat-expansion-panel-header-description {
+    align-items: center;
+  }
+
+  .mat-expansion-panel-header-description {
+    mat-icon {
+      margin-right: 4px;
+    }
+  }
+}

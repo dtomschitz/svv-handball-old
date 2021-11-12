@@ -1,0 +1,48 @@
+<toolbar [loggedIn]="isLoggedIn$ | ngrxPush" (toggleSidenav)="toggleSidenav()">
+  <div class="title">
+    <span>SV Vaihingen Handball </span>
+    <span>CMS</span>
+  </div>
+  <span class="flex-spacer"></span>
+  <button *ngIf="isLoggedIn$ | ngrxPush" [matMenuTriggerFor]="menu" mat-icon-button>
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button (click)="logout()" mat-menu-item>
+      <mat-icon>logout</mat-icon>
+      <span>Abmelden</span>
+    </button>
+  </mat-menu>
+</toolbar>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="side" [opened]="showSidenav$ | ngrxPush" [fixedInViewport]="true" [fixedTopGap]="64"
+    [fixedBottomGap]="0" [class.sidenav-fix]="!(showSidenav$ | ngrxPush)" (keydown.escape)="closeSidenav()">
+    <div class="sidenav">
+      <div class="navigation">
+        <mat-nav-list>
+          <nav-item (navigate)="navigateTo('/')" icon="home"> Dashboard </nav-item>
+          <nav-item (navigate)="navigateTo('/users')" icon="people"> Benutzer </nav-item>
+          <mat-divider></mat-divider>
+          <nav-item (navigate)="navigateTo('/contact-persons')" icon="connect_without_contact">
+            Ansprechpartner
+          </nav-item>
+          <nav-item (navigate)="navigateTo('/articles')" icon="article"> Berichte </nav-item>
+          <nav-item (navigate)="navigateTo('/images')" icon="image"> Bilder </nav-item>
+          <nav-item (navigate)="navigateTo('/teams')" icon="sports_handball"> Mannschaften </nav-item>
+          <nav-item (navigate)="navigateTo('/sponsors')" icon="payment"> Sponsoren </nav-item>
+          <mat-divider></mat-divider>
+          <nav-item (navigate)="navigateTo('/hvw')" icon="corporate_fare"> HVW Spielbetrieb </nav-item>
+        </mat-nav-list>
+      </div>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="content">
+      <feature-bar *ngIf="featureBar$ | ngrxPush as featureBar" [featureBar]="featureBar"
+        (navigate)="navigateTo($event)"></feature-bar>
+      <div class="router-outlet">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

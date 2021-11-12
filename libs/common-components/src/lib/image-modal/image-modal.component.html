@@ -1,0 +1,14 @@
+<div class="image-modal">
+  <img [src]="image.url">
+  <div class="image-modal-overlay">
+    <div class="image-modal-control">
+      <div class="image-modal-header">
+        <div class="image-modal-title"> {{ image.title }}</div>
+        <div class="image-modal-subtitle"> {{ image.subtitle }}</div>
+      </div>
+      <button class="image-modal-close" (click)="close()" mat-stroked-button>
+        Bild schließen
+      </button>
+    </div>
+  </div>
+</div>

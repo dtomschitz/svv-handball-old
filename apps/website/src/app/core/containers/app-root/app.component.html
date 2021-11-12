@@ -1,0 +1,38 @@
+<ng-container *ngIf="this.isDesktop; else mobile">
+  <div class="header">
+    <img src="assets/banner.jpg" alt="SV Vaihingen Handball Banner" width="1240" height="130">
+  </div>
+  <div class="container">
+    <div class="content">
+      <sidenav-left (navigate)="navigateTo($event)"></sidenav-left>
+      <div class="router">
+        <router-outlet *ngIf="isBrowser"></router-outlet>
+      </div>
+      <sidenav-right></sidenav-right>
+    </div>
+    <footer (navigate)="navigateTo($event)"></footer>
+  </div>
+</ng-container>
+<ng-template #mobile>
+  <mat-toolbar class="app-bar" [class.scrolling]="isScrolling">
+    <button class="menu-button" (click)="toggleSidenav()" mat-icon-button>
+      <mat-icon>menu</mat-icon>
+    </button>
+    <img class="logo" src="../assets/logo.png" height="40" width="40" alt="SV Vaihingen Handball Logo">
+    <h1>SV Vaihingen Handball</h1>
+  </mat-toolbar>
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav [opened]="showSidenav$ | async" [mode]="sidenavMode$ | async" fixedTopGap="56">
+      <sidenav-left (navigate)="navigateTo($event)"></sidenav-left>
+    </mat-sidenav>
+    <mat-sidenav-content (scroll)="onScroll($event)">
+      <div class="content">
+        <div class="router">
+          <router-outlet *ngIf="isBrowser"></router-outlet>
+        </div>
+        <sidenav-right></sidenav-right>
+      </div>
+      <footer (navigate)="navigateTo($event)"></footer>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</ng-template>

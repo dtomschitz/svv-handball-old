@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  db:
+    container_name: db
+    image: mongo:latest
+    restart: unless-stopped
+    ports:
+      - '27017:27017'
+    networks:
+      - ssv-handball
+    volumes:
+      - mongodb:/data/db
+
+  redis:
+    container_name: cache
+    image: redis
+    ports:
+      - '6379:6379'
+    networks:
+      - ssv-handball
+
+networks:
+  ssv-handball:
+    driver: bridge
+
+volumes:
+  mongodb:
+    driver: local

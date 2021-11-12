@@ -1,0 +1,23 @@
+<ng-container *ngIf="classId; else noClassId">
+  <ng-container *ngIf="loading$ | async; else loaded">
+    <game-card *ngFor="let _ of emptyArray(12)" [loading]="true"> </game-card>
+  </ng-container>
+  <ng-template #loaded>
+    <ng-container *ngxLet="error$ as error">
+      <ng-container *ngIf="!error; else errorCallout">
+        <game-card *ngFor="let game of (schedule$ | async)?.games; trackBy: trackByFn" [game]="game" [loading]="false">
+        </game-card>
+      </ng-container>
+      <ng-template #errorCallout>
+        <callout type="WARN">
+          Der Spielplan konnte nicht geladen werden!
+        </callout>
+      </ng-template>
+    </ng-container>
+  </ng-template>
+</ng-container>
+<ng-template #noClassId>
+  <callout type="INFO">
+    Für diese Mannschaft ist kein Spielplan hinterlegt.
+  </callout>
+</ng-template>

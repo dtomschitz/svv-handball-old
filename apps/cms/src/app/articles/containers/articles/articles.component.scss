@@ -1,0 +1,41 @@
+.mat-column-title {
+  flex: 2;
+
+  .mat-cell-wrapper {
+    display: flex;
+    align-items: center;
+
+    .pinned {
+      margin-right: 16px;
+    }
+
+    mat-chip {
+      margin: 0 6px 0 0;
+    }
+
+    span {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}
+
+.mat-column-date {
+  max-width: 150px;
+}
+
+.mat-column-_id {
+  max-width: 200px;
+}
+
+.mat-column-actions {
+  max-width: 80px;
+}
+
+.data-table-details {
+  display: flex;
+  flex: 1;
+  margin: 16px;
+}

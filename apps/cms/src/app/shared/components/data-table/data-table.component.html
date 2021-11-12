@@ -1,0 +1,51 @@
+<mat-card class="data-table-card mat-elevation-z4">
+  <div class="data-table-header">
+    <div class="data-table-search">
+      <search-bar *ngIf="enableSearch" [placeholder]="searchPlaceholder" (valueChange)="applyFilter($event)">
+      </search-bar>
+    </div>
+    <div class="data-table-actions">
+      <ng-content select="data-table-actions"></ng-content>
+    </div>
+  </div>
+  <div class="spinner-container">
+    <div *ngIf="loading" class="spinner">
+      <mat-spinner [diameter]="40"></mat-spinner>
+    </div>
+    <mat-card-content>
+      <mat-table class="data-table" [dataSource]="dataSource" multiTemplateDataRows matSortDisableClear
+        matSortDirection="desc">
+        <ng-content select="[matColumnDef]"></ng-content>
+        <ng-container *ngIf="expandable" matColumnDef="expandedDetail">
+          <mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+            <div *ngIf="expandedElement?._id === element?._id" class="details">
+              <ng-content select="data-table-details"></ng-content>
+            </div>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <ng-container *ngIf="expandable; else notExpandable">
+          <mat-row *matRowDef="let row; columns: displayedColumns" class="data-table-element-row"
+            (click)="expandRow(row)">
+          </mat-row>
+        </ng-container>
+        <ng-template #notExpandable>
+          <mat-row *matRowDef="let row; columns: displayedColumns">
+          </mat-row>
+        </ng-template>
+        <ng-container *ngIf="expandable">
+          <mat-row *matRowDef="let row; columns: ['expandedDetail']" class="data-table-detail-row"></mat-row>
+        </ng-container>
+      </mat-table>
+      <ng-container *ngIf="!loading && noData">
+        <ng-content select="data-table-no-data"></ng-content>
+      </ng-container>
+    </mat-card-content>
+    <mat-card-actions>
+      <div class="data-table-bottom-footer">
+        <div class="flex-spacer"></div>
+        <mat-paginator [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+      </div>
+    </mat-card-actions>
+  </div>
+</mat-card>

@@ -1,0 +1,12 @@
+<mat-nav-list>
+  <a href="http://spo.handball4all.de/misc/sboPublicReports.php?sGID={{
+      this.data.game.sGId
+    }}" (click)="close($event)" [disabled]="!this.hasGameReport" mat-list-item>
+    <mat-icon mat-list-icon>content_paste</mat-icon>
+    <span mat-line>Spielbericht</span>
+  </a>
+  <a (click)="openGymInfo($event)" mat-list-item>
+    <mat-icon mat-list-icon>place</mat-icon>
+    <span mat-line>Hallen Information</span>
+  </a>
+</mat-nav-list>

@@ -1,0 +1,13 @@
+<dialog (closeDialog)="close(false)">
+  <dialog-title>Klassen aktualisieren</dialog-title>
+  <dialog-body>
+    <callout type="INFO">
+      Das aktualisieren der Klassen kann einige Minuten in anspruch nehmen. Alle zuvor gespeicherten
+      Klassen werden gelöscht und anschließend ersetzt.
+    </callout>
+  </dialog-body>
+  <dialog-actions>
+    <button (click)="close(false)" mat-button>Abbrechen</button>
+    <button color="primary" (click)="close(true)" mat-flat-button>Aktualisieren</button>
+  </dialog-actions>
+</dialog>

@@ -1,0 +1,108 @@
+<div class="content-container">
+  <ng-container *ngrxLet="contactPersons$ as contactPersons">
+    <ng-container *ngrxLet="categories$ as categories">
+      <data-table [data]="contactPersons" [loading]="loading$ | ngrxPush" [displayedColumns]="displayedColumns"
+        searchPlaceholder="Nach Name oder Ansprechpartner-ID suchen" matSort>
+        <data-table-actions>
+          <button color="primary" (click)="createContactPerson(categories, contactPersons.length)" mat-flat-button>
+            Ansprechpartner erstellen
+          </button>
+
+          <button (click)="sortContactPersons(contactPersons, categories)" [disabled]="contactPersons.length < 2"
+            matTooltip="Sortien" mat-icon-button>
+            <mat-icon>sort</mat-icon>
+          </button>
+          <button (click)="refreshContactPersons()" matTooltip="Aktualisieren" mat-icon-button>
+            <mat-icon>refresh</mat-icon>
+          </button>
+        </data-table-actions>
+
+        <data-table-no-data>
+          <mat-icon>info</mat-icon>
+          Es wurden keine Ansprechpartner gefunden!
+        </data-table-no-data>
+
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef>
+            <div class="header-cell-wrapper">Name</div>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let contactPerson">
+            <div class="mat-cell-wrapper">
+              <ng-container *ngIf="contactPerson.disabled">
+                <mat-chip-list>
+                  <mat-chip color="warn" (click)="toggleContactPerson(contactPerson)" selected>
+                    <mat-icon>info</mat-icon>
+                    Deaktiviert
+                  </mat-chip>
+                </mat-chip-list>
+              </ng-container>
+              <span>{{ contactPerson.name }}</span>
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <mat-header-cell *matHeaderCellDef>
+            <div class="header-cell-wrapper">E-Mail</div>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let contactPerson">
+            <div class="mat-cell-wrapper" [matTooltip]="contactPerson.email">
+              {{ contactPerson.email }}
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="people">
+          <mat-header-cell *matHeaderCellDef>
+            <div class="header-cell-wrapper">Personen</div>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let contactPerson">
+            <div class="mat-cell-wrapper" [matTooltip]="contactPerson?.people | oxfordJoin">
+              {{ contactPerson?.people | oxfordJoin }}
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="_id">
+          <mat-header-cell *matHeaderCellDef>
+            <div class="header-cell-wrapper">Ansprechpartner-UID</div>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let contactPerson">
+            <div class="mat-cell-wrapper" matTooltip="{{ contactPerson._id }}">
+              {{ contactPerson._id }}
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef></mat-header-cell>
+          <mat-cell *matCellDef="let contactPerson">
+            <button class="copy-button" (click)="copyContactPersonId($event)" [cdkCopyToClipboard]="contactPerson._id"
+              matTooltip="UID kopieren" mat-icon-button>
+              <mat-icon>content_copy</mat-icon>
+            </button>
+            <button [matMenuTriggerFor]="menu" (click)="preventDefault($event)" matTooltip="Weitere Optionen anzeigen"
+              mat-icon-button>
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button (click)="editContactPerson(contactPerson, categories)" mat-menu-item>
+                <mat-icon>edit</mat-icon>
+                <span>Bearbeiten</span>
+              </button>
+              <button (click)="toggleContactPerson(contactPerson)" mat-menu-item>
+                <mat-icon>{{ contactPerson.disabled ? 'visibility' : 'visibility_off' }}</mat-icon>
+                <span>{{ contactPerson.disabled ? 'Aktivieren' : 'Deaktivieren' }}</span>
+              </button>
+              <mat-divider></mat-divider>
+              <button (click)="deleteContactPerson(contactPerson)" mat-menu-item>
+                <mat-icon>delete_forever</mat-icon>
+                <span>Löschen</span>
+              </button>
+            </mat-menu>
+          </mat-cell>
+        </ng-container>
+      </data-table>
+    </ng-container>
+  </ng-container>
+</div>

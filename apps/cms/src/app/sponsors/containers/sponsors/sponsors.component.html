@@ -1,0 +1,100 @@
+<div class="content-container">
+  <ng-container *ngrxLet="sponsors$ as sponsors">
+    <data-table [data]="sponsors" [loading]="loading$ | ngrxPush" [displayedColumns]="displayedColumns"
+      [expandable]="true" searchPlaceholder="Nach Name oder Sponsor-ID suchen" matSort
+      (rowExpanded)="onRowExpanded($event)">
+      <data-table-actions>
+        <button color="primary" (click)="createSponsor(sponsors.length)" mat-flat-button>Sponsor erstellen</button>
+        <button (click)="sortSponsors(sponsors)" [disabled]="sponsors.length < 2" matTooltip="Sortien" mat-icon-button>
+          <mat-icon>sort</mat-icon>
+        </button>
+        <button (click)="refreshSponsors()" matTooltip="Aktualisieren" mat-icon-button>
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </data-table-actions>
+
+      <data-table-no-data>
+        <mat-icon>info</mat-icon>
+        Es wurden keine Sponsoren gefunden!
+      </data-table-no-data>
+
+      <data-table-details>
+        <ng-container *ngIf="expandedSponsor as sponsor">
+          <sponsor-details [sponsor]="sponsor" (editSponsorImage)="editSponsorImage(sponsor)"
+            (toggleSponsorImage)="toggleSponsorImage(sponsor)" (deleteSponsorImage)="deleteSponsorImage(sponsor)">
+          </sponsor-details>
+        </ng-container>
+      </data-table-details>
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef>
+          <div class="header-cell-wrapper">Name</div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let sponsor">
+          <div class="mat-cell-wrapper">
+            <ng-container *ngIf="sponsor.disabled">
+              <mat-chip-list>
+                <mat-chip color="warn" (click)="toggleSponsor(sponsor)" selected>
+                  <mat-icon>info</mat-icon>
+                  Deaktiviert
+                </mat-chip>
+              </mat-chip-list>
+            </ng-container>
+            <span>{{ sponsor.name }}</span>
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="link">
+        <mat-header-cell *matHeaderCellDef>
+          <div class="header-cell-wrapper">Link</div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let sponsor">
+          <div class="mat-cell-wrapper">
+            {{ sponsor.link }}
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="_id">
+        <mat-header-cell *matHeaderCellDef>
+          <div class="header-cell-wrapper">Sponsor-UID</div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let sponsor">
+          <div class="mat-cell-wrapper" matTooltip="{{ sponsor._id }}">
+            {{ sponsor._id }}
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let sponsor">
+          <button class="copy-button" (click)="copySponsorId($event)" [cdkCopyToClipboard]="sponsor._id"
+            matTooltip="UID kopieren" mat-icon-button>
+            <mat-icon>content_copy</mat-icon>
+          </button>
+          <button [matMenuTriggerFor]="menu" (click)="preventDefault($event)" matTooltip="Weitere Optionen anzeigen"
+            mat-icon-button>
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button (click)="editSponsor(sponsor)" mat-menu-item>
+              <mat-icon>edit</mat-icon>
+              <span>Bearbeiten</span>
+            </button>
+            <button (click)="toggleSponsor(sponsor)" mat-menu-item>
+              <mat-icon>{{ sponsor.disabled ? 'visibility' : 'visibility_off' }}</mat-icon>
+              <span>{{ sponsor.disabled ? 'Aktivieren' : 'Deaktivieren' }}</span>
+            </button>
+            <mat-divider></mat-divider>
+            <button (click)="deleteSponsor(sponsor)" mat-menu-item>
+              <mat-icon>delete_forever</mat-icon>
+              <span>Löschen</span>
+            </button>
+          </mat-menu>
+        </mat-cell>
+      </ng-container>
+    </data-table>
+  </ng-container>
+</div>

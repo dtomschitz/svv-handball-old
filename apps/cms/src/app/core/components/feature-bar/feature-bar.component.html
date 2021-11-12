@@ -1,0 +1,13 @@
+<div class="feature-bar">
+  <div class="feature-bar-title">
+    <h1>{{ featureBar.title }}</h1>
+  </div>
+  <nav class="feature-bar-tabs" mat-tab-nav-bar>
+    <ng-container *ngIf="featureBar.tabs as tabs">
+      <a *ngFor="let tab of tabs; index as i" [active]="featureBar.currentTab === i"
+        (click)="navigateTo(featureBar.path, tab)" mat-tab-link disableRipple>
+        {{ tab.name }}
+      </a>
+    </ng-container>
+  </nav>
+</div>

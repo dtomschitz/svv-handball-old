@@ -1,0 +1,46 @@
+.mat-column-id {
+  max-width: 80px;
+}
+
+.mat-column-_id {
+  max-width: 200px;
+}
+
+.mat-column-class {
+  max-width: 80px;
+}
+
+.mat-column-date {
+  max-width: 140px;
+}
+
+.mat-column-time {
+  max-width: 100px;
+}
+
+.mat-column-teams {
+  max-width: 170px;
+
+  .mat-cell-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: 30px;
+    justify-content: center;
+
+    .team {
+      display: flex;
+      line-height: 13px;
+      justify-content: space-between;
+
+      .name {
+        flex: 1;
+        padding-right: 6px;
+      }
+    }
+  }
+}
+
+.mat-column-actions {
+  max-width: 40px;
+}

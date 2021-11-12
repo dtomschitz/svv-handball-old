@@ -1,0 +1,41 @@
+<encounters-control></encounters-control>
+<encounters-filter (onFilterChanged)="onFilterChanged($event)"></encounters-filter>
+
+<ng-container *ngIf="loading$ | async; else loaded">
+  <div class="encounters">
+    <h2>
+      <shimmer-placeholder></shimmer-placeholder>
+    </h2>
+    <game-card *ngFor="let _ of emptyArray(3, 5)" [loading]="true" [showClass]="true"> </game-card>
+    <h2>
+      <shimmer-placeholder></shimmer-placeholder>
+    </h2>
+    <game-card *ngFor="let _ of emptyArray(3, 5)" [loading]="true" [showClass]="true"> </game-card>
+  </div>
+</ng-container>
+<ng-template #loaded>
+  <ng-container *ngxLet="error$ as error">
+    <ng-container *ngIf="error; else games">
+      <callout type="WARN">
+        Begegnungen konnten nicht geladen werden!
+      </callout>
+    </ng-container>
+    <ng-template #games>
+      <ng-container *ngxLet="gameWeek$ as gameWeek">
+        
+        <div *ngFor="let day of gameWeek.days" class="encounters">
+          <ng-container *ngIf="isValidDate(day.date); else invalidDate">
+            <h2>{{ day.date }}</h2>
+          </ng-container>
+          <ng-template #invalidDate>
+            <h2>Unbekannt</h2>
+          </ng-template>
+          <games [games]="day.games | gamesFilter:filterType" [showClass]="true"></games>
+        </div>
+        <callout *ngIf="gameWeek.days.length === 0" type="INFO">
+          Für diese Spielwoche konnten keine Begegnungen gefunden werden.
+        </callout>
+      </ng-container>
+    </ng-template>
+  </ng-container>
+</ng-template>

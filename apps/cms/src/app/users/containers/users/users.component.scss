@@ -1,0 +1,35 @@
+.mat-column-email {
+  flex-grow: 2;
+
+  .mat-cell-wrapper {
+    display: flex;
+    align-items: center;
+
+    mat-chip {
+      margin: 0 6px 0 0;
+    }
+
+    span {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}
+
+.mat-column-lastLogin {
+  max-width: 100px;
+}
+
+.mat-column-email {
+  min-width: 200px;
+
+  .mat-cell-wrapper {
+    padding-right: 0;
+  }
+}
+
+.mat-column-actions {
+  max-width: 80px;
+}

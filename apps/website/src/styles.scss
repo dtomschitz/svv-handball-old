@@ -1,0 +1,434 @@
+@import '~@angular/material/theming';
+@include mat-core();
+
+$theme-primary: mat-palette($mat-red, 800);
+$theme-accent: mat-palette($mat-red, 900);
+$theme-warn: mat-palette($mat-red);
+$theme: mat-light-theme(
+  (
+    color: (
+      primary: $theme-primary,
+      accent: $theme-accent,
+      warn: $theme-warn,
+    ),
+  )
+);
+
+@include angular-material-theme($theme);
+
+:root {
+  --primary: #c62828;
+  --accent: #e91e63;
+  --warn: #f44336;
+  --warn-background: #fbe9e7;
+  --info: #476282;
+  --info-background: #e5eaf0;
+  --gray-200: #e0e0e0;
+  --gray-300: #e0e0e0;
+  --gray-500: #9e9e9e;
+  --gray-600: #757575;
+  --gray-700: #757575;
+  --text-active: rgba(0, 0, 0, 0.87);
+  --text-inactive: rgba(0, 0, 0, 0.54);
+  --text-disabled: rgba(0, 0, 0, 0.38);
+}
+
+@mixin mat-dense-list {
+  mat-list {
+    .mat-list-item {
+      height: 56px !important;
+    }
+  }
+}
+
+@mixin typescale-display {
+  font-size: 32px;
+  line-height: 38px;
+}
+
+@mixin typescale-xlarge {
+  font-size: 24px;
+  line-height: 30px;
+}
+
+@mixin typescale-large {
+  font-size: 20px;
+  line-height: 28px;
+}
+
+@mixin typescale-default {
+  font-size: 16px;
+  line-height: 24px;
+}
+
+@mixin typescale-small {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica,
+    Arial, 'Lucida Grande', sans-serif;
+  user-select: none;
+  font-size: 10pt;
+  background-color: #e4e6eb;
+  overscroll-behavior: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2 {
+  margin: 0;
+  margin-bottom: 16px;
+}
+
+h1 {
+  @include typescale-display;
+  font-weight: 500;
+}
+
+h2 {
+  @include typescale-xlarge;
+  display: block;
+  font-weight: 500;
+}
+
+h3 {
+  @include typescale-large;
+  font-weight: 500;
+  margin: 24px 0px 12px;
+  clear: both;
+}
+
+p {
+  margin: 16px 0;
+}
+
+.mobile {
+  @media (max-width: 740px) {
+    sidenav-right {
+      display: none;
+      visibility: hidden;
+    }
+  }
+
+  .app-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 0;
+    z-index: 2;
+    background-color: #fff;
+    transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+
+    @media (max-width: 300px) {
+      .menu-button {
+        margin: 0 8px !important;
+      }
+    }
+
+    &.scrolling {
+      box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%),
+        0 1px 5px 0 rgb(0 0 0 / 12%);
+    }
+
+    .menu-button {
+      margin: 0 16px;
+    }
+
+    .logo {
+      margin-right: 16px;
+      width: 40px;
+      height: 40px;
+
+      @media (min-width: 1140px) {
+        margin-left: 16px;
+      }
+
+      @media (max-width: 354px) {
+        display: none;
+        visibility: hidden;
+      }
+    }
+  }
+
+  .app-footer {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+
+    mat-toolbar {
+      justify-content: center;
+
+      a {
+        font-size: 14px;
+        margin: 0 10px 0 10px;
+      }
+    }
+  }
+
+  mat-sidenav {
+    max-width: 300px;
+    width: 100%;
+    border-right: none;
+
+    sidenav-left {
+      max-width: 300px;
+      margin: 11px 0;
+
+      sidenav-section {
+        margin: 0 16px;
+      }
+    }
+  }
+
+  mat-sidenav-container {
+    position: absolute;
+    flex: 1 1 auto;
+    top: 64px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+
+    @media (max-width: 600px) {
+      top: 56px;
+    }
+  }
+
+  mat-sidenav-content {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+
+    .content {
+      display: flex;
+      width: 100%;
+
+      sidenav-left,
+      sidenav-right {
+        margin: 32px 0;
+      }
+    }
+  }
+
+  .router {
+    flex: 1;
+    min-height: 0;
+    min-width: 0;
+    margin: 32px;
+
+    @media (max-width: 600px) {
+      margin: 16px;
+    }
+  }
+}
+
+.desktop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1240px;
+  margin: 0 auto;
+
+  box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%),
+    0 1px 5px 0 rgb(0 0 0 / 12%);
+
+  .header {
+    display: flex;
+    padding: 40px 0;
+    width: 100%;
+    background-color: #fff;
+    padding: 40px 0;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+
+    .content {
+      display: flex;
+      width: 100%;
+      background-color: #fff;
+    }
+
+    .router {
+      flex: 1;
+      padding: 0 32px 32px 32px;
+      flex-basis: 730px;
+    }
+  }
+
+  .app-footer {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+
+    mat-toolbar {
+      justify-content: center;
+
+      a {
+        font-size: 14px;
+        margin: 0 10px 0 10px;
+      }
+    }
+  }
+
+  .desktop-footer {
+    display: flex;
+    flex-direction: column;
+    height: 250px;
+    background-color: whitesmoke;
+    padding: 23px;
+
+    .top {
+      display: flex;
+      flex: 1;
+      background-color: whitesmoke;
+
+      .block {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+
+    .bottom {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 20px;
+
+      mat-divider {
+        height: 20px;
+        margin: 0 16px;
+      }
+    }
+  }
+}
+
+mat-card.mat-card {
+  border-radius: 16px;
+
+  .mat-card-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+mat-dialog-container.mat-dialog-container {
+  background-color: #fafafa !important;
+  border-radius: 16px !important;
+  box-shadow: 0 2px 3px 0 rgba(60, 64, 67, 0.3),
+    0 6px 10px 4px rgba(60, 64, 67, 0.15) !important;
+  max-height: calc(100vh - 48px);
+  padding: 0;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.sidenav-button.mat-flat-button {
+  display: flex;
+  align-items: center;
+  height: 46px;
+  font-weight: 400;
+  padding: 0;
+  width: 100%;
+  text-align: left;
+
+  .mat-button-wrapper {
+    display: flex;
+    align-items: center;
+    flex: 1;
+  }
+
+  .icon {
+    height: 46px;
+    width: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 16px;
+  }
+
+  .text {
+    display: flex;
+    align-items: center;
+    height: 36px;
+    margin-right: 16px;
+    width: 100%;
+
+    shimmer-placeholder {
+      height: 14px;
+      max-width: 100%;
+    }
+  }
+
+  &:hover:not(.loading) {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
+a:not(.mat-button-base) {
+  color: var(--gray-700);
+  font-weight: 500 !important;
+  text-decoration: none;
+
+  .animated {
+    display: inline-block;
+    text-decoration: none;
+
+    &::after {
+      content: '';
+      display: block;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      transition: width 0.3s;
+    }
+
+    &:hover::after {
+      width: 100%;
+    }
+  }
+
+  &:hover {
+    color: var(--primary);
+  }
+}
+
+.gym-info-sheet {
+  overflow: hidden !important;
+  padding: 0 !important;
+}
+
+.flex-spacer {
+  flex-grow: 1;
+}
+
+.mat-simple-snackbar-action > button {
+  color: #fff;
+}
+
+@mixin mat-dense-list {
+  mat-list {
+    .mat-list-item {
+      height: 56px !important;
+    }
+  }
+}

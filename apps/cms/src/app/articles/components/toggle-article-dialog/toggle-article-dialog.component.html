@@ -1,0 +1,21 @@
+<dialog (closeDialog)="close()">
+  <dialog-title> Bericht {{ !article.disabled ? 'verstecken' : 'veröffentlichen' }}</dialog-title>
+  <dialog-body>
+    <callout *ngIf="article.disabled" icon="info" type="INFO">
+      Veröffentlichte Berichte werden auf der Webseite angezeigt!
+    </callout>
+    <callout *ngIf="!article.disabled" icon="warning" type="WARN">
+      Versteckte Berichte werden auf der Webseite nicht angezeigt!
+    </callout>
+    <mat-list-item>
+      <h4 matLine>Bericht</h4>
+      <p matLine>{{ article.title }}</p>
+    </mat-list-item>
+  </dialog-body>
+  <dialog-actions>
+    <button (click)="close()" mat-button>Abbrechen</button>
+    <button color="{{ !article.disabled ? 'warn' : 'primary' }}" (click)="toggleArticle()" mat-flat-button>
+      {{ !article.disabled ? 'Verstecken' : 'Veröffentlichen' }}
+    </button>
+  </dialog-actions>
+</dialog>

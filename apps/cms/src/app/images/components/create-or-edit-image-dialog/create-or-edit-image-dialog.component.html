@@ -1,0 +1,31 @@
+<dialog class="dialog" (closeDialog)="close()">
+  <dialog-title>Bild {{ isCreateDialog ? 'hochladen' : 'bearbeiten' }}</dialog-title>
+  <dialog-body>
+    <form autocomplete="off" [formGroup]="imageForm" errorGroupName="createOrEditImage">
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input formControlName="name" matInput />
+        <mat-error errorTailor></mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select formControlName="tagIds" placeholder="Tags" [multiple]="true">
+          <mat-option>
+            <ngx-mat-select-search [formControl]="tagSearchControl" placeholderLabel="Tag auswählen..."
+              noEntriesFoundLabel="Es wurde kein Tag gefunden">
+            </ngx-mat-select-search>
+          </mat-option>
+          <mat-option *ngFor="let tag of filteredTags$ | async" [value]="tag._id">
+            {{tag.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <cms-image></cms-image>
+    </form>
+  </dialog-body>
+  <dialog-actions>
+    <button (click)="close()" mat-button>Abbrechen</button>
+    <button color="primary" [disabled]="invalidOrNotDirty" (click)="save()" mat-flat-button>
+      Speichern
+    </button>
+  </dialog-actions>
+</dialog>

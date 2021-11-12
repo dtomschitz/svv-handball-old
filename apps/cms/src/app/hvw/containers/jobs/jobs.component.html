@@ -1,0 +1,95 @@
+<div class="content-container">
+  <data-table [data]="jobs$ | ngrxPush" [loading]="loading$ | ngrxPush" [displayedColumns]="displayedColumns"
+    searchPlaceholder="Nach Name, Typ oder CronJob-UID suchen" matSort>
+    <data-table-actions>
+      <button color="primary" (click)="createJob()" mat-flat-button>CronJob erstellen</button>
+      <button (click)="refreshJobs()" matTooltip="Aktualisieren" mat-icon-button>
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </data-table-actions>
+
+    <data-table-no-data>
+      <mat-icon>info</mat-icon>
+      Es wurden keine CronJobs gefunden!
+    </data-table-no-data>
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef>
+        <div class="header-cell-wrapper">Name</div>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let job">
+        <div class="mat-cell-wrapper">
+          <ng-container *ngIf="job.disabled">
+            <mat-chip-list>
+              <mat-chip color="warn" (click)="toggleJob(job)" selected>
+                <mat-icon>info</mat-icon>
+                Deaktiviert
+              </mat-chip>
+            </mat-chip-list>
+          </ng-container>
+          <span matTooltip="{{ job.name }}">{{ job.name }}</span>
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="type">
+      <mat-header-cell *matHeaderCellDef>
+        <div class="header-cell-wrapper">Typ</div>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let job">
+        <div class="mat-cell-wrapper">
+          {{ getCachingType(job.type) }}
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="cronExpression">
+      <mat-header-cell *matHeaderCellDef>
+        <div class="header-cell-wrapper">Cron</div>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let job">
+        <div class="mat-cell-wrapper" matTooltip="{{ getCronText(job.cronExpression) }}">
+          {{ getCronText(job.cronExpression) }}
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="_id">
+      <mat-header-cell *matHeaderCellDef>
+        <div class="header-cell-wrapper">CronJob-UID</div>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let job">
+        <div class="mat-cell-wrapper" matTooltip="{{ job._id }}">
+          {{ job._id }}
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let job">
+        <button (click)="copyJobId()" matTooltip="UID kopieren" [cdkCopyToClipboard]="job._id" mat-icon-button>
+          <mat-icon>content_copy</mat-icon>
+        </button>
+        <button [matMenuTriggerFor]="menu" matTooltip="Weitere Optionen anzeigen" mat-icon-button>
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button (click)="editJob(job)" mat-menu-item>
+            <mat-icon>edit</mat-icon>
+            <span>Bearbeiten</span>
+          </button>
+          <button (click)="toggleJob(job)" mat-menu-item>
+            <mat-icon>{{ job.disabled ? 'visibility' : 'visibility_off' }}</mat-icon>
+            <span>{{ job.disabled ? 'Aktivieren' : 'Deaktivieren' }}</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button (click)="deleteJob(job)" mat-menu-item>
+            <mat-icon>delete_forever</mat-icon>
+            <span>Löschen</span>
+          </button>
+        </mat-menu>
+      </mat-cell>
+    </ng-container>
+  </data-table>
+</div>

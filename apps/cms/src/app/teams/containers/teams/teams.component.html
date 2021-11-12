@@ -1,0 +1,136 @@
+<div class="content-container">
+  <ng-container *ngrxLet="classes$ as classes">
+    <ng-container *ngrxLet="articleCategories$ as articleCategories">
+      <data-table [data]=" teams" [loading]="loading$ | ngrxPush" [displayedColumns]="displayedColumns"
+        [expandable]="true" (rowExpanded)="onRowExpanded($event)"
+        searchPlaceholder="Nach E-Mail oder Mannschafts-ID suchen" matSort>
+        <data-table-actions>
+          <button color="primary" (click)="createTeam(teams.length, classes, articleCategories)" mat-flat-button>
+            Mannschaft erstellen
+          </button>
+          <button (click)="sortTeams(teams)" [disabled]="teams.length < 2" matTooltip="Sortien" mat-icon-button>
+            <mat-icon>sort</mat-icon>
+          </button>
+          <button (click)="refreshTeams()" matTooltip="Aktualisieren" mat-icon-button>
+            <mat-icon>refresh</mat-icon>
+          </button>
+        </data-table-actions>
+
+        <data-table-no-data>
+          <mat-icon>info</mat-icon>
+          Es wurden keine Mannschaften gefunden!
+        </data-table-no-data>
+
+        <data-table-details>
+          <ng-container *ngIf="expandedTeam as team">
+            <team-details [team]="team" (editTeamImage)="editTeamImage(team)" (toggleTeamImage)="toggleTeamImage(team)"
+              (deleteTeamImage)="deleteTeamImage(team)">
+            </team-details>
+          </ng-container>
+        </data-table-details>
+
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef>
+            <div class="header-cell-wrapper">Name</div>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let team">
+            <div class="mat-cell-wrapper">
+              <ng-container *ngIf="team.disabled">
+                <mat-chip-list>
+                  <mat-chip color="warn" (click)="toggleTeam(team)" selected>
+                    <mat-icon>info</mat-icon>
+                    Deaktiviert
+                  </mat-chip>
+                </mat-chip-list>
+              </ng-container>
+              <span>{{ team.name }}</span>
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="abbreviation">
+          <mat-header-cell *matHeaderCellDef>
+            <div class="header-cell-wrapper">Abkürzung</div>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let team">
+            <div class="mat-cell-wrapper">
+              {{ team.abbreviation }}
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="gender">
+          <mat-header-cell *matHeaderCellDef>
+            <div class="header-cell-wrapper">Geschlecht</div>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let team">
+            <div class="mat-cell-wrapper">
+              {{ getGender(team) }}
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="class">
+          <mat-header-cell *matHeaderCellDef>
+            <div class="header-cell-wrapper">Spielklasse</div>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let team">
+            <div class="mat-cell-wrapper">
+              {{ getClass(team, classes) }}
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="_id">
+          <mat-header-cell *matHeaderCellDef>
+            <div class="header-cell-wrapper">Mannschafts-UID</div>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let team">
+            <div class="mat-cell-wrapper" matTooltip="{{ team._id }}">
+              {{ team._id }}
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef></mat-header-cell>
+          <mat-cell *matCellDef="let team">
+            <button (click)="copyTeamId($event)" [cdkCopyToClipboard]="team._id" matTooltip="UID kopieren"
+              mat-icon-button>
+              <mat-icon>content_copy</mat-icon>
+            </button>
+            <button (click)="preventDefault($event)" [matMenuTriggerFor]="menu" matTooltip="Weitere Optionen anzeigen"
+              mat-icon-button>
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <ng-container *ngrxLet="coaches$ as coaches">
+                <button [disabled]="coaches.length === 0" (click)="editTeamCoaches(team, coaches)" mat-menu-item>
+                  <mat-icon>group</mat-icon>
+                  <span>Trainer bearbeiten</span>
+                </button>
+              </ng-container>
+              <button (click)="editTeam(team, classes, articleCategories)" mat-menu-item>
+                <mat-icon>edit</mat-icon>
+                <span>Details bearbeiten</span>
+              </button>
+              <button (click)="editTrainingTimes(team)" mat-menu-item>
+                <mat-icon>schedule</mat-icon>
+                <span>Trainingszeiten bearbeiten</span>
+              </button>
+              <button (click)="toggleTeam(team)" mat-menu-item>
+                <mat-icon>{{ team.disabled ? 'visibility' : 'visibility_off' }}</mat-icon>
+                <span>{{ team.disabled ? 'Aktivieren' : 'Deaktivieren' }}</span>
+              </button>
+              <mat-divider></mat-divider>
+              <button (click)="deleteTeam(team)" mat-menu-item>
+                <mat-icon>delete_forever</mat-icon>
+                <span>Löschen</span>
+              </button>
+            </mat-menu>
+          </mat-cell>
+        </ng-container>
+      </data-table>
+    </ng-container>
+  </ng-container>
+</div>

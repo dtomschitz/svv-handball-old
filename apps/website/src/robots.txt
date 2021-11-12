@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /docs/
+
+Sitemap: https://svv-handball.de/sitemap.xml

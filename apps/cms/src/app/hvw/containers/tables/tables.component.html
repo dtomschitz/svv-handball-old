@@ -1,0 +1,70 @@
+<div class="content-container">
+  <data-table [data]="tables$ | ngrxPush" [loading]="loading$ | ngrxPush" [displayedColumns]="displayedColumns"
+    searchPlaceholder="Nach Klasse oder Tabellen-UID suchen" matSort>
+    <data-table-actions>
+      <button [matMenuTriggerFor]="actionsMenu" matTooltip="Weitere Optionen anzeigen" mat-icon-button>
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #actionsMenu="matMenu">
+        <button (click)="cacheTables()" mat-menu-item>
+          <mat-icon>autorenew</mat-icon>
+          <span>Cache aktualisieren</span>
+        </button>
+        <button (click)="deleteTables()" mat-menu-item>
+          <mat-icon>delete_forever</mat-icon>
+          <span>Datenbank leeren</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button (click)="refreshTables()" mat-menu-item>
+          <mat-icon>refresh</mat-icon>
+          <span>Inhalt aktualisieren</span>
+        </button>
+      </mat-menu>
+    </data-table-actions>
+
+    <data-table-no-data>
+      <mat-icon>info</mat-icon>
+      Es wurden keine Tabellen gefunden!
+    </data-table-no-data>
+
+    <ng-container matColumnDef="class">
+      <mat-header-cell *matHeaderCellDef>
+        <div class="header-cell-wrapper">Klasse</div>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let table">
+        <div class="mat-cell-wrapper">
+          <ng-container *ngIf="table.class; else noClass">
+            {{ table?.class?.longName }}
+          </ng-container>
+          <ng-template #noClass>
+            Keine Spielklasse zugewiesen
+          </ng-template>
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="_id">
+      <mat-header-cell *matHeaderCellDef>
+        <div class="header-cell-wrapper">Tabelle-UID</div>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let table">
+        <div class="mat-cell-wrapper" matTooltip="{{ table._id }}">
+          {{ table._id }}
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let table">
+        <button class="copy-button" (click)="copyTableId()" matTooltip="UID kopieren" [cdkCopyToClipboard]="table._id"
+          mat-icon-button>
+          <mat-icon>content_copy</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+  </data-table>
+
+  <caching-results [cachingResults]="cachingResults$ | ngrxPush" [loading]="cachingResultsLoading$ | ngrxPush">
+  </caching-results>
+</div>

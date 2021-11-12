@@ -1,0 +1,23 @@
+sidenav {
+  max-width: 216px;
+}
+
+sidenav-section {
+  margin-right: 16px;
+}
+
+a {
+  display: flex;
+  justify-content: center;
+
+  img {
+    max-width: 175px;
+  }
+}
+
+a,
+button {
+  mat-icon {
+    margin: 0 8px;
+  }
+}

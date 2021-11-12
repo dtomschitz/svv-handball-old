@@ -1,0 +1,74 @@
+@import '~@angular/material/theming';
+
+:host {
+  @include mat-elevation(3);
+  display: flex;
+  flex-direction: row;
+  max-height: 50px;
+  padding: 5px;
+  border-radius: 50px;
+  margin: 16px 0;
+}
+
+button,
+mat-select {
+  max-height: 40px;
+}
+
+.week {
+  border-radius: 50px;
+}
+
+.daterange {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 16px;
+  width: 100%;
+  max-width: 211px;
+
+  @media screen and (max-width: 512px) {
+    margin: 0;
+    mat-icon {
+      display: none;
+      visibility: hidden;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    display: none;
+    visibility: hidden;
+  }
+
+  .shimmer-placeholder {
+    height: 32px;
+    width: 100%;
+  }
+
+  mat-chip {
+    width: 100%;
+    margin: 0;
+    background-color: rgba(0, 0, 0, 0.05);
+
+    &:active {
+      box-shadow: none !important;
+    }
+
+    &::after {
+      opacity: 0;
+      transition: none;
+    }
+
+    &:hover::after {
+      opacity: 0;
+    }
+  }
+
+  .mat-date-range-input {
+    width: 1px;
+  }
+
+  mat-icon {
+    margin-right: 8px;
+  }
+}

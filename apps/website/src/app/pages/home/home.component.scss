@@ -1,0 +1,24 @@
+@import '~@angular/material/theming';
+
+callout {
+  max-width: 100%;
+  margin-bottom: 36px;
+}
+
+pinned-articles {
+  margin-bottom: 36px;
+}
+
+.mindchange {
+  @include mat-elevation(6, #c62828, 1);
+  margin-bottom: 32px;
+}
+
+.download-button {
+  width: 100%;
+  text-align: left;
+
+  mat-icon {
+    margin-right: 8px;
+  }
+}

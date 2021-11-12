@@ -1,0 +1,159 @@
+:host {
+  display: block;
+  margin: 16px;
+}
+
+callout {
+  display: block;
+  margin: 32px !important;
+}
+
+.hvw-table {
+  flex: 1;
+  margin: 0 16px !important;
+  //margin: 16px;
+  padding: 0 16px 16px 16px;
+  border-radius: 16px;
+
+  .head {
+    display: flex;
+    color: var(--gray-600);
+    font-weight: bold;
+    height: 40px;
+    line-height: 40px;
+    padding: 5px 0 5px 0;
+  }
+
+  .row {
+    display: flex;
+    flex-direction: row;
+    height: 40px;
+    line-height: 40px;
+
+    &.highlighted {
+      font-weight: bold;
+    }
+
+    .team {
+      overflow: hidden;
+
+      span {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
+
+    .score,
+    .team,
+    .games,
+    .s,
+    .goals,
+    .points {
+      display: flex;
+      align-items: center;
+
+      shimmer-placeholder {
+        height: 14px;
+        max-width: 100%;
+      }
+    }
+
+    .score,
+    .games,
+    .s,
+    .goals,
+    .points {
+      justify-content: center;
+    }
+
+    .score,
+    ._score,
+    .team,
+    ._team,
+    .games,
+    ._games,
+    .s,
+    ._s,
+    .goals,
+    ._goals {
+      padding-right: 16px;
+    }
+
+    .score,
+    ._score,
+    .games,
+    ._games,
+    .s,
+    ._s,
+    .goals,
+    ._goals,
+    .points,
+    ._points {
+      flex-shrink: 0;
+    }
+
+    .score,
+    .games,
+    .s,
+    ._s,
+    .goals,
+    ._goals,
+    .points,
+    ._points {
+      text-align: center;
+    }
+
+    .s,
+    ._s {
+      width: 20px;
+      @media screen and (max-width: 550px) {
+        display: none;
+        visibility: hidden;
+      }
+    }
+
+    .u,
+    ._u {
+      @media screen and (max-width: 580px) {
+        display: none;
+        visibility: hidden;
+      }
+    }
+
+    .score,
+    ._score {
+      width: 26px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .team,
+    ._team {
+      flex-grow: 1;
+    }
+
+    .games,
+    ._games {
+      width: 40px;
+      @media screen and (max-width: 480px) {
+        display: none;
+        visibility: hidden;
+      }
+    }
+
+    .goals,
+    ._goals {
+      width: 51px;
+      @media screen and (max-width: 400px) {
+        display: none;
+        visibility: hidden;
+      }
+    }
+
+    .points,
+    .points {
+      width: 45px;
+    }
+  }
+}

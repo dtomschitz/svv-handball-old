@@ -1,0 +1,55 @@
+.gym-info {
+  display: block;
+}
+
+.google-maps {
+  width: 100%;
+  display: block;
+  position: relative;
+}
+
+.google-maps-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+
+  shimmer-placeholder {
+    height: 100%;
+    width: 100%;
+
+    .shimmer-effect {
+      border-radius: 0;
+    }
+  }
+}
+
+mat-list {
+  .passings,
+  .gym-info {
+    .name,
+    .town,
+    .street,
+    .permit,
+    .wax {
+      display: flex;
+      height: 20px;
+      align-items: center;
+    }
+
+    .name shimmer-placeholder {
+      height: 16px;
+      width: 250px;
+    }
+
+    .town shimmer-placeholder,
+    .street shimmer-placeholder,
+    .permit shimmer-placeholder,
+    .wax shimmer-placeholder {
+      height: 14px;
+      width: 200px;
+    }
+  }
+}

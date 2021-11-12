@@ -1,0 +1,69 @@
+<div class="content-container">
+  <data-table [data]="weeks$ | ngrxPush" [loading]="loading$ | ngrxPush" [displayedColumns]="displayedColumns"
+    searchPlaceholder="Nach Datum oder Wochen-UID suchen" matSort>
+    <data-table-actions>
+      <button [matMenuTriggerFor]="actionsMenu" matTooltip="Weitere Optionen anzeigen" mat-icon-button>
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #actionsMenu="matMenu">
+        <button (click)="cacheWeeks()" mat-menu-item>
+          <mat-icon>autorenew</mat-icon>
+          <span>Cache aktualisieren</span>
+        </button>
+        <button (click)="deleteWeeks()" mat-menu-item>
+          <mat-icon>delete_forever</mat-icon>
+          <span>Datenbank leeren</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button (click)="refreshWeeks()" mat-menu-item>
+          <mat-icon>refresh</mat-icon>
+          <span>Inhalt aktualisieren</span>
+        </button>
+      </mat-menu>
+    </data-table-actions>
+
+    <data-table-no-data>
+      <mat-icon>info</mat-icon>
+      Es wurden keine Spielwochen gefunden!
+    </data-table-no-data>
+
+    <ng-container matColumnDef="date">
+      <mat-header-cell *matHeaderCellDef>
+        <div class="header-cell-wrapper">Datum</div>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let week">
+        <div class="mat-cell-wrapper">
+          <ng-container *ngIf="isDateValid(week.date); else unknonwDate">
+            {{week.date | date: 'fullDate' }}
+          </ng-container>
+          <ng-template #unknonwDate>
+            Unbekannt
+          </ng-template>
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="_id">
+      <mat-header-cell *matHeaderCellDef>
+        <div class="header-cell-wrapper">Wochen-UID</div>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let week">
+        <div class="mat-cell-wrapper" matTooltip="{{ week._id }}">
+          {{ week._id }}
+        </div>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let week">
+        <button class="copy-button" (click)="copyWeekId()" matTooltip="UID kopieren" [cdkCopyToClipboard]="week._id"
+          mat-icon-button>
+          <mat-icon>content_copy</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+  </data-table>
+
+  <caching-results [cachingResults]="cachingResults$ | ngrxPush" [loading]="cachingResultsLoading$ | ngrxPush">
+  </caching-results>
+</div>

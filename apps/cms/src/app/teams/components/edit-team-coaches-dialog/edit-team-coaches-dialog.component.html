@@ -1,0 +1,33 @@
+<dialog (closeDialog)="close()">
+  <dialog-title> Trainer bearbeiten </dialog-title>
+  <dialog-body>
+    <mat-form-field>
+      <mat-label>Trainer suchen..</mat-label>
+      <input [formControl]="searchControl" [matAutocomplete]="auto" type="text" matInput>
+      <button *ngIf="searchControl.value" (click)="resetSearchControl()" mat-button matSuffix mat-icon-button>
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="addCoach($event.option.value)" autoActiveFirstOption>
+        <mat-option *ngFor="let coach of filteredCoaches$ | async" [value]="coach">
+          {{ coach.firstName }} {{ coach.lastName }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <div class="coaches" (cdkDropListDropped)="drop($event)" cdkDropList>
+      <div class="coach" *ngFor="let coach of selectedCoaches" cdkDragLockAxis="y" cdkDrag>
+        <mat-icon class="drag" cdkDragHandle>drag_handle</mat-icon>
+        <span>{{ coach.firstName }} {{ coach.lastName }}</span>
+        <button (click)="removeCoach(coach._id)" mat-icon-button>
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </dialog-body>
+  <dialog-actions>
+    <button (click)="close()" mat-button>Abbrechen</button>
+    <button color="primary" (click)="save()" mat-flat-button>
+      Speichern
+    </button>
+  </dialog-actions>
+</dialog>

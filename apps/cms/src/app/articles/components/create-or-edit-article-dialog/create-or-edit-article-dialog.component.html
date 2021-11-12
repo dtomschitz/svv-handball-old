@@ -1,0 +1,69 @@
+<dialog class="dialog" (closeDialog)="close()">
+  <dialog-title>Bericht {{ isCreateDialog ? 'erstellen' : 'bearbeiten' }}</dialog-title>
+  <dialog-body>
+    <form autocomplete="off" [formGroup]="articleForm" errorGroupName="createArticle">
+      <div style="display: flex;">
+        <mat-form-field>
+          <mat-label>Titel</mat-label>
+          <input formControlName="title" matInput />
+          <mat-error errorTailor></mat-error>
+        </mat-form-field>
+        <button (click)="pinArticle()" style="margin-left: 8px" mat-icon-button>
+          <mat-icon>{{ articleForm.get('pinned').value ? 'bookmark' : 'bookmark_border'}}</mat-icon>
+        </button>
+      </div>
+      <mat-form-field>
+        <mat-label>Untertitel</mat-label>
+        <input formControlName="subtitle" matInput />
+        <mat-error errorTailor></mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select formControlName="authorIds" placeholder="Autoren" [multiple]="true" #multiSelect>
+          <mat-option>
+            <ngx-mat-select-search [formControl]="authorSearchControl" placeholderLabel="Autoren auswählen..."
+              noEntriesFoundLabel="Es wurde kein Autor gefunden">
+            </ngx-mat-select-search>
+          </mat-option>
+          <mat-option *ngFor="let author of filteredAuthors$ | async" [value]="author._id">
+            {{author.firstName}} {{author.lastName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select formControlName="categoryIds" placeholder="Kategorien" [multiple]="true" #multiSelect>
+          <mat-option>
+            <ngx-mat-select-search [formControl]="categorySearchControl" placeholderLabel="Kategorien auswählen..."
+              noEntriesFoundLabel="Es wurde kein Kategorien gefunden">
+            </ngx-mat-select-search>
+          </mat-option>
+          <mat-option *ngFor="let category of filteredCategories$ | async" [value]="category._id">
+            {{ category.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-slide-toggle formControlName="readMore" color="primary" style="margin-bottom: 16px">
+        Weiterlesen-Funktion aktivieren
+      </mat-slide-toggle>
+      <mat-slide-toggle color="primary" style="margin-bottom: 16px" (click)="toggleHtmlEditor()">
+        Plain Editor
+      </mat-slide-toggle>
+      <quill-editor *ngIf="!htmlEditor" class="quill-editor" [placeholder]="''" formControlName="content">
+      </quill-editor>
+      <mat-form-field *ngIf="htmlEditor">
+        <mat-label>HTML Content</mat-label>
+        <textarea class="html-editor" formControlName="content" matInput></textarea>
+      </mat-form-field>
+    </form>
+    <div class="preview-container">
+      <ng-container *ngIf="article$ | async as article">
+        <article [article]="article"></article>
+      </ng-container>
+    </div>
+  </dialog-body>
+  <dialog-actions>
+    <button (click)="close()" mat-button>Abbrechen</button>
+    <button color="primary" [disabled]="invalidOrNotDirty" (click)="save()" mat-flat-button>
+      Speichern
+    </button>
+  </dialog-actions>
+</dialog>

@@ -1,0 +1,43 @@
+<dialog (closeDialog)="close()">
+  <dialog-title> Nutzer {{ isCreateDialog ? 'erstellen' : 'bearbeiten' }} </dialog-title>
+  <dialog-body>
+    <form autocomplete="off" [formGroup]="userForm" errorGroupName="createOrEditUser">
+      <section *ngIf="!data.disableCanLoginControl">
+        <mat-slide-toggle color="primary" [checked]="canLogin" (toggleChange)="toggleCanLogin()">
+          Kann sich anmelden
+        </mat-slide-toggle>
+      </section>
+      <ng-container *ngIf="canLogin">
+        <mat-form-field>
+          <mat-label>E-Mail</mat-label>
+          <input formControlName="email" matInput />
+          <mat-error errorTailor></mat-error>
+        </mat-form-field>
+        <mat-form-field *ngIf="isCreateDialog">
+          <mat-label>Passwort</mat-label>
+          <input formControlName="password" [type]="hidePassword ? 'password' : 'text'" matInput />
+          <button (click)="hidePassword = !hidePassword" mat-icon-button matSuffix>
+            <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+          <mat-error errorTailor></mat-error>
+        </mat-form-field>
+      </ng-container>
+      <mat-form-field>
+        <mat-label>Vorname</mat-label>
+        <input formControlName="firstName" matInput />
+        <mat-error errorTailor></mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Nachname</mat-label>
+        <input formControlName="lastName" matInput />
+        <mat-error errorTailor></mat-error>
+      </mat-form-field>
+    </form>
+  </dialog-body>
+  <dialog-actions>
+    <button (click)="close()" mat-button>Abbrechen</button>
+    <button color="primary" [disabled]="invalidOrNotDirty" [mat-dialog-close]="userForm.value" mat-flat-button>
+      Speichern
+    </button>
+  </dialog-actions>
+</dialog>

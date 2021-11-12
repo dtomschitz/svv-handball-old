@@ -1,0 +1,14 @@
+<div class="quick-links">
+  <ng-container *ngrxLet="info$ as info">
+    <quick-link-card *ngFor="let card of cards" [title]="card.title" [subtitle]="card.subtitle" [label]="card.label"
+      [count]="info[card.link] || 0" (navigate)="navigateTo(card.link)">
+    </quick-link-card>
+  </ng-container>
+</div>
+<!--<ng-container *ngrxLet="services$ as services">
+  <status-card [services]="services">
+    <button (click)="refreshStatus()" mat-icon-button>
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </status-card>
+</ng-container>-->

@@ -1,0 +1,9 @@
+:host {
+  display: flex;
+}
+
+.quick-links {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 990px;
+}

@@ -1,0 +1,18 @@
+<dialog (closeDialog)="cancel()">
+  <dialog-title>
+    {{ title }}
+  </dialog-title>
+  <dialog-body>
+    <callout [type]="calloutConfig.type">
+      {{ calloutConfig.message }}
+    </callout>
+    <mat-list-item *ngIf="item">
+      <h4 matLine>{{ item.name }}</h4>
+      <p matLine>{{ item.line }}</p>
+    </mat-list-item>
+  </dialog-body>
+  <dialog-actions>
+    <button (click)="cancel()" mat-button>{{ buttons.cancel }}</button>
+    <button [color]="buttons.confirm.color" (click)="confirm()" mat-flat-button>{{ buttons.confirm.title }}</button>
+  </dialog-actions>
+</dialog>

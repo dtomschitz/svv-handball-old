@@ -1,0 +1,21 @@
+.thx {
+  font-size: 16pt;
+}
+
+.sponsors {
+  width: 100%;
+  display: flex;
+  flex-flow: wrap;
+  margin: 20px 0;
+  justify-content: center;
+}
+
+.contact {
+  h3 {
+    margin: 0;
+  }
+
+  .mat-list-base {
+    padding-top: 0;
+  }
+}

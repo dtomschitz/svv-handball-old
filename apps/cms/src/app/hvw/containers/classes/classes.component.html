@@ -1,0 +1,86 @@
+<div class="content-container">
+  <data-table [data]="classes$ | ngrxPush" [loading]="loading$ | ngrxPush" [displayedColumns]="displayedColumns"
+    searchPlaceholder="Nach ID, Abkürzung oder Klassen-UID suchen" matSort>
+    <data-table-actions>
+      <button [matMenuTriggerFor]="actionsMenu" matTooltip="Weitere Optionen anzeigen" mat-icon-button>
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #actionsMenu="matMenu">
+        <button (click)="cacheClasses()" mat-menu-item>
+          <mat-icon>autorenew</mat-icon>
+          <span>Cache aktualisieren</span>
+        </button>
+        <button (click)="deleteClasses()" mat-menu-item>
+          <mat-icon>delete_forever</mat-icon>
+          <span>Datenbank leeren</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button (click)="refreshClasses()" mat-menu-item>
+          <mat-icon>refresh</mat-icon>
+          <span>Inhalt aktualisieren</span>
+        </button>
+      </mat-menu>
+    </data-table-actions>
+
+    <data-table-no-data>
+      <mat-icon>info</mat-icon>
+      Es wurden keine Spielklassen gefunden!
+    </data-table-no-data>
+
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef>
+        <div class="header-cell-wrapper">ID</div>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let clazz">
+        <div class="mat-cell-wrapper">
+          {{ clazz.id }}
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="shortName">
+      <mat-header-cell *matHeaderCellDef>
+        <div class="header-cell-wrapper">Abkürzung</div>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let clazz">
+        <div class="mat-cell-wrapper">
+          {{ clazz.shortName }}
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="longName">
+      <mat-header-cell *matHeaderCellDef>
+        <div class="header-cell-wrapper">Voller Klassenname</div>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let clazz">
+        <div class="mat-cell-wrapper">
+          {{ clazz.longName }}
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="_id">
+      <mat-header-cell *matHeaderCellDef>
+        <div class="header-cell-wrapper">Klassen-UID</div>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let clazz">
+        <div class="mat-cell-wrapper" matTooltip="{{ clazz._id }}">
+          {{ clazz._id }}
+        </div>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let clazz">
+        <button class="copy-button" (click)="copyClassId()" matTooltip="UID kopieren" [cdkCopyToClipboard]="clazz._id"
+          mat-icon-button>
+          <mat-icon>content_copy</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+  </data-table>
+
+  <caching-results [cachingResults]="cachingResults$ | ngrxPush" [loading]="cachingResultsLoading$ | ngrxPush">
+  </caching-results>
+</div>

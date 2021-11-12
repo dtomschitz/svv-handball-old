@@ -1,0 +1,18 @@
+<mat-card class="mat-elevation-z4">
+  <mat-card-header>
+    <mat-card-title>
+      Service Status
+      <ng-content select="mat-icon-button"></ng-content>
+    </mat-card-title>
+    <mat-card-subtitle>Aktueller Status der verschiedenen Services und Server</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div *ngFor="let service of services" class="service">
+      <div class="name">{{ service.name }}</div>
+      <div class="status" [ngClass]="{
+        'up': !isDown(service.status),
+        'down': isDown(service.status)
+      }">{{ service.status }}</div>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,62 @@
+<div class="content-container">
+  <ng-container *ngrxLet="tags$ as tags">
+    <data-table [data]=" tags" [loading]="loading$ | ngrxPush" [displayedColumns]="displayedColumns"
+      searchPlaceholder="Nach Name oder Tag-ID suchen" matSort>
+      <data-table-actions>
+        <button color="primary" (click)="createImageTag()" mat-flat-button>
+          Tag erstellen
+        </button>
+        <button (click)="refreshImageTags()" matTooltip="Aktualisieren" mat-icon-button>
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </data-table-actions>
+      <data-table-no-data>
+        <mat-icon>info</mat-icon>
+        Es wurden keine Tags gefunden!
+      </data-table-no-data>
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef>
+          <div class="header-cell-wrapper">Name</div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let tag">
+          <div class="mat-cell-wrapper">
+            {{ tag.name }}
+          </div>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="_id">
+        <mat-header-cell *matHeaderCellDef>
+          <div class="header-cell-wrapper">Tag-UID</div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let tag">
+          <div class="mat-cell-wrapper" matTooltip="{{ tag._id }}">
+            {{ tag._id }}
+          </div>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let tag">
+          <button (click)="copyTagId($event)" [cdkCopyToClipboard]="tag._id" matTooltip="UID kopieren" mat-icon-button>
+            <mat-icon>content_copy</mat-icon>
+          </button>
+          <button (click)="preventDefault($event)" [matMenuTriggerFor]="menu" matTooltip="Weitere Optionen anzeigen"
+            mat-icon-button>
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button (click)="editImageTag(tag)" mat-menu-item>
+              <mat-icon>edit</mat-icon>
+              <span>Bearbeiten</span>
+            </button>
+            <mat-divider></mat-divider>
+            <button (click)="deleteImageTag(tag)" mat-menu-item>
+              <mat-icon>delete_forever</mat-icon>
+              <span>Löschen</span>
+            </button>
+          </mat-menu>
+        </mat-cell>
+      </ng-container>
+    </data-table>
+  </ng-container>
+</div>

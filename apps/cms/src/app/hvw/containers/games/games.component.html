@@ -1,0 +1,133 @@
+<div class="content-container">
+  <data-table [data]="games$ | ngrxPush" [loading]="loading$ | ngrxPush" [displayedColumns]="displayedColumns"
+    searchPlaceholder="Nach ID, Klasse oder Spiel-UID suchen" matSort>
+
+    <data-table-actions>
+      <button [matMenuTriggerFor]="actionsMenu" matTooltip="Weitere Optionen anzeigen" mat-icon-button>
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #actionsMenu="matMenu">
+        <button (click)="cacheGames()" mat-menu-item>
+          <mat-icon>autorenew</mat-icon>
+          <span>Cache aktualisieren</span>
+        </button>
+        <button (click)="deleteGames()" mat-menu-item>
+          <mat-icon>delete_forever</mat-icon>
+          <span>Datenbank leeren</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button (click)="refreshGames()" mat-menu-item>
+          <mat-icon>refresh</mat-icon>
+          <span>Inhalt aktualisieren</span>
+        </button>
+      </mat-menu>
+    </data-table-actions>
+
+    <data-table-no-data>
+      <mat-icon>info</mat-icon>
+      Es wurden keine Begegnungen gefunden!
+    </data-table-no-data>
+
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef>
+        <div class="header-cell-wrapper">ID</div>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let game">
+        <div class="mat-cell-wrapper">
+          {{ game.id }}
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="class">
+      <mat-header-cell *matHeaderCellDef>
+        <div class="header-cell-wrapper">Klasse</div>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let game">
+        <div class="mat-cell-wrapper">
+          {{ game.classId }}
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="date">
+      <mat-header-cell *matHeaderCellDef>
+        <div class="header-cell-wrapper">Datum</div>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let game">
+        <div class="mat-cell-wrapper">
+          <ng-container *ngIf="isDateValid(game.date); else unknonwDate">
+            {{game.date | date: 'longDate' }}
+          </ng-container>
+          <ng-template #unknonwDate>
+            Unbekannt
+          </ng-template>
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="time">
+      <mat-header-cell *matHeaderCellDef>
+        <div class="header-cell-wrapper">Uhrzeit</div>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let game">
+        <div class="mat-cell-wrapper">
+          {{ game.time }}
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="teams">
+      <mat-header-cell *matHeaderCellDef>
+        <div class="header-cell-wrapper">Begegnung</div>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let game">
+        <div class="mat-cell-wrapper">
+          <div class="team">
+            <div class="name">{{ game.teams.home.name }}</div>
+            <div class="score">{{ game.teams.home.goals }}</div>
+          </div>
+          <div class="team">
+            <div class="name">{{ game.teams.guest.name }}</div>
+            <div class="score">{{ game.teams.guest.goals }}</div>
+          </div>
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="comment">
+      <mat-header-cell *matHeaderCellDef>
+        <div class="header-cell-wrapper">Kommentar</div>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let game">
+        <div class="mat-cell-wrapper" matTooltip="{{ game.comment }}">
+          {{ game.comment }}
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="_id">
+      <mat-header-cell *matHeaderCellDef>
+        <div class="header-cell-wrapper">Spiel-UID</div>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let game">
+        <div class="mat-cell-wrapper" matTooltip="{{ game._id }}">
+          {{ game._id }}
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let game">
+        <button class="copy-button" (click)="copyGameId()" matTooltip="UID kopieren" [cdkCopyToClipboard]="game._id"
+          mat-icon-button>
+          <mat-icon>content_copy</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+  </data-table>
+
+  <caching-results [cachingResults]="cachingResults$ | ngrxPush" [loading]="cachingResultsLoading$ | ngrxPush">
+  </caching-results>
+</div>

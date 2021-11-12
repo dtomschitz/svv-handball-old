@@ -1,0 +1,14 @@
+:host {
+  display: block;
+}
+
+articles {
+  ::ng-deep .article {
+    margin: 16px !important;
+  }
+}
+
+callout {
+  display: block;
+  margin: 32px !important;
+}

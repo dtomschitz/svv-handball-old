@@ -1,0 +1,18 @@
+<dialog (closeDialog)="close()">
+  <dialog-title> Kategorie löschen </dialog-title>
+  <dialog-body>
+    <callout type="WARN">
+      Wenn Sie eine Kategorie löschen, wird diese endgültig entfernt. Das Löschen von Kategorien kann nicht rückgängig
+      gemacht
+      werden.
+    </callout>
+    <mat-list-item>
+      <h4 matLine>Kategorie</h4>
+      <p matLine>{{ data.category.name }}</p>
+    </mat-list-item>
+  </dialog-body>
+  <dialog-actions>
+    <button (click)="close()" mat-button>Abbrechen</button>
+    <button color="warn" (click)="deleteCategory()" mat-flat-button>Löschen</button>
+  </dialog-actions>
+</dialog>

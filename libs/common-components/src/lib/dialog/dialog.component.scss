@@ -1,0 +1,51 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 48px);
+  overflow: auto;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dialog-header {
+  flex: 0 0 auto;
+  padding: 24px;
+}
+
+.dialog-title {
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 500;
+  flex: 1 1 auto;
+  margin: 0 32px 16px 0;
+}
+
+.dialog-body {
+  flex: 1;
+  font-size: 14px;
+  line-height: 20px;
+  padding: 0 24px;
+}
+
+.dialog-actions {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  flex: 0 0 auto;
+  flex-wrap: wrap-reverse;
+  justify-content: flex-end;
+  min-height: 36px;
+  padding: 24px;
+}
+
+.dialog-close {
+  // color: var(--text-inactive);
+  margin-bottom: 16px;
+  position: absolute;
+  right: 16px;
+  top: 16px;
+}

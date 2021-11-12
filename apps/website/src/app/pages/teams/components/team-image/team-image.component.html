@@ -1,0 +1,6 @@
+<lazy-image (click)="openImageModal(team)" [lazyImage]="getImagePath(team?.images?.small?.path)"
+  [imageRatio]="team?.images?.small.width / team?.images?.small.height || 1024/683" [altText]="getImageAltText(team)">
+  <lazy-image-placeholder>
+    <shimmer-placeholder></shimmer-placeholder>
+  </lazy-image-placeholder>
+</lazy-image>

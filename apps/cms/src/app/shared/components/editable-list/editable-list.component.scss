@@ -1,0 +1,36 @@
+:host {
+  display: blockc;
+}
+
+mat-form-field {
+  width: 100%;
+
+  .mat-icon-button {
+    width: 40px !important;
+    height: 40px !important;
+    line-height: 40px !important;
+  }
+
+  .mat-icon {
+    font-size: 24px !important;
+    line-height: 24px;
+  }
+}
+
+mat-list {
+  overflow: auto;
+  max-height: 300px;
+}
+
+.editable-list-title {
+  display: block;
+  margin-top: 16px;
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.item {
+  .text {
+    width: 100%;
+    margin-right: 16px;
+  }
+}

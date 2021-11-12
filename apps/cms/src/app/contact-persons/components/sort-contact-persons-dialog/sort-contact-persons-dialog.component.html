@@ -1,0 +1,33 @@
+<dialog (closeDialog)="close()">
+  <dialog-title>Sortierung ändern</dialog-title>
+  <dialog-body>
+    <callout type="INFO">
+      Ansprechpartner werden der Sortierung entsprechend auf der Webseite angezeigt.
+    </callout>
+
+    <mat-form-field>
+      <mat-label>Kategorie auswählen</mat-label>
+      <mat-select [formControl]="categoryFormControl">
+        <mat-option *ngFor="let category of categories" [value]="category._id">
+          {{ category.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="contact-persons" (cdkDropListDropped)="drop($event)" cdkDropList>
+      <div class="contact-person" *ngFor="let contactPerson of contactPersons$ | async" cdkDragLockAxis="y" cdkDrag>
+        <div class="title">
+          {{ contactPerson.name }}
+          <div *ngIf="contactPerson?.people" class="people">
+            {{ contactPerson?.people | oxfordJoin }}
+          </div>
+        </div>
+        <mat-icon class="drag" cdkDragHandle>drag_handle</mat-icon>
+      </div>
+    </div>
+  </dialog-body>
+  <dialog-actions>
+    <button (click)="close()" mat-button>Abbrechen</button>
+    <button color="primary" (click)="save()" mat-flat-button>Speichern</button>
+  </dialog-actions>
+</dialog>

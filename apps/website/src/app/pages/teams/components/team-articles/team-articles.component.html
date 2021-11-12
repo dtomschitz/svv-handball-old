@@ -1,0 +1,8 @@
+<ng-container *ngIf="articleCategoryId; else noArticleCategoryId">
+  <articles [category]="articleCategoryId"></articles>
+</ng-container>
+<ng-template #noArticleCategoryId>
+  <callout type="INFO">
+    Für diese Mannschaft wurden keine Berichte gefunden.
+  </callout>
+</ng-template>

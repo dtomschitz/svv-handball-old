@@ -1,0 +1,43 @@
+<h1>Ansprechpartner</h1>
+<organization-chart></organization-chart>
+
+<ng-container *ngIf="loading$ | async; else loaded">
+  <div class="contact-persons">
+    <h2>
+      <shimmer-placeholder></shimmer-placeholder>
+    </h2>
+    <contact-person *ngFor="let i of emptyArray(5)" [loading]="true"></contact-person>
+  </div>
+  <div class="contact-persons">
+    <h2>
+      <shimmer-placeholder></shimmer-placeholder>
+    </h2>
+    <contact-person *ngFor="let i of emptyArray(7)" [loading]="true"></contact-person>
+  </div>
+  <div class="contact-persons">
+    <h2>
+      <shimmer-placeholder></shimmer-placeholder>
+    </h2>
+    <contact-person *ngFor="let i of emptyArray(6)" [loading]="true"></contact-person>
+  </div>
+</ng-container>
+
+<ng-template #loaded>
+  <ng-container *ngxLet="error$ as error">
+    <ng-container *ngIf="!error; else errorCallout">
+      <div *ngFor="let groupedContactPerson of groupedContactPersons$ | async" class="contact-persons">
+        <h2>{{ groupedContactPerson.name }}</h2>
+        <mat-accordion>
+          <contact-person *ngFor="let contactPerson of groupedContactPerson.contactPersons"
+            [contactPerson]="contactPerson" [loading]="false">
+          </contact-person>
+        </mat-accordion>
+      </div>
+    </ng-container>
+    <ng-template #errorCallout>
+      <callout type="WARN">
+        Die Ansprechpartner konnten nicht geladen werden!
+      </callout>
+    </ng-template>
+  </ng-container>
+</ng-template>

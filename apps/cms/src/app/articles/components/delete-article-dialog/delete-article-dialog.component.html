@@ -1,0 +1,17 @@
+<dialog (closeDialog)="close()">
+  <dialog-title> Bericht löschen </dialog-title>
+  <dialog-body>
+    <callout type="WARN">
+      Wenn Sie einen Bericht löschen, wird dieser endgültig entfernt. Das Löschen von Berichten kann nicht rückgängig
+      gemacht werden.
+    </callout>
+    <mat-list-item>
+      <h4 matLine>Bericht</h4>
+      <p matLine>{{ data.article.title }}</p>
+    </mat-list-item>
+  </dialog-body>
+  <dialog-actions>
+    <button (click)="close()" mat-button>Abbrechen</button>
+    <button color="warn" (click)="deleteArticle()" mat-flat-button>Löschen</button>
+  </dialog-actions>
+</dialog>

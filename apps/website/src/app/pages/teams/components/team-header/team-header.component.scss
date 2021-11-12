@@ -1,0 +1,33 @@
+.team-header {
+  margin-bottom: 20px;
+
+  h1,
+  h2 {
+    margin: 0;
+  }
+
+  h4 {
+    color: black;
+  }
+
+  .name {
+    height: 38px;
+    .shimmer-placeholder {
+      height: 32px;
+      max-width: 312px;
+    }
+  }
+
+  .class {
+    height: 24px;
+    color: var(--gray-6005);
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 24px;
+
+    .shimmer-placeholder {
+      height: 20px;
+      max-width: 200px;
+    }
+  }
+}

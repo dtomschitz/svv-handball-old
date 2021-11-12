@@ -1,0 +1,17 @@
+:host {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  //margin: 0 16px;
+
+  &:last-of-type {
+    mat-divider {
+      display: none;
+      visibility: hidden;
+    }
+  }
+}
+
+mat-divider {
+  margin-top: 16px;
+}

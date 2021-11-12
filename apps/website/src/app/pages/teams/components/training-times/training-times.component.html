@@ -1,0 +1,8 @@
+<mat-list-item class="training-times">
+  <mat-icon matListIcon>schedule</mat-icon>
+  <h4 matLine>Trainingszeiten</h4>
+  <div *ngFor="let trainingTime of trainingTimes" class="training-time" matLine>
+    <div class="location">{{ trainingTime.location }}</div>
+    <div class="time">({{ trainingTime.startTime }} - {{ trainingTime.endTime }} Uhr)</div>
+  </div>
+</mat-list-item>

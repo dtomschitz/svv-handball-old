@@ -1,0 +1,55 @@
+.amazon-smile {
+  width: 200px;
+  height: 260px;
+  position: relative;
+  background-image: url('../../../../assets/amazon_smile_260px.jpg');
+}
+
+a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  color: #000;
+  text-decoration: none;
+
+  .text {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    right: 8px;
+
+    .support-wrapper {
+      overflow: hidden;
+
+      .support {
+        font-size: 18px;
+        font-weight: 700;
+        color: #333;
+        text-align: center;
+        line-height: 21px;
+        margin: 8px 0;
+      }
+    }
+
+    .when-shop {
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 15px;
+      color: #333;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    .donates {
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 21px;
+      color: #333;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+  }
+}

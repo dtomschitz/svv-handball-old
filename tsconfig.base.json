@@ -1,0 +1,31 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@svv/core/models": ["libs/models/src/index.ts"],
+      "@svv/error-tailor": ["libs/error-tailor/src/public-api.ts"],
+      "@svv/cms/*": ["apps/cms/src/app/*"],
+      "@svv/cms/environments/*": ["apps/cms/src/environments/*"],
+      "@svv/api/*": ["apps/api/src/app/*"],
+      "@svv/api/test/*": ["apps/api/test/*"],
+      "@svv/api/environments/*": ["apps/api/src/environments/*"],
+      "@svv/website/*": ["apps/website/src/app/*"],
+      "@svv/website/environments/*": ["apps/website/src/environments/*"],
+      "@svv/common-components/*": ["libs/common-components/src/lib/*"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

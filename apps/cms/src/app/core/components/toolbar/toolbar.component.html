@@ -1,0 +1,7 @@
+<mat-toolbar>
+  <button [disabled]="!loggedIn" (click)="toggleSidenav.emit()" mat-icon-button >
+    <mat-icon>menu</mat-icon>
+  </button>
+  <ng-content></ng-content>
+</mat-toolbar>
+<mat-divider></mat-divider>

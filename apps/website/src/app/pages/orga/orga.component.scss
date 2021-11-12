@@ -1,0 +1,16 @@
+:host {
+  .orga-text {
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: center;
+    font-style: italic;
+  }
+
+  img {
+    width: 100%;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

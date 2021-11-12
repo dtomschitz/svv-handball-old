@@ -1,0 +1,110 @@
+<div class="content-container">
+  <data-table [data]="users" [loading]="loading$ | ngrxPush" [displayedColumns]="displayedColumns"
+    searchPlaceholder="Nach E-Mail oder Nutzer-ID suchen" matSort>
+    <data-table-actions>
+      <button class="create-user" color="primary" (click)="createUser()" mat-flat-button>Nutzer erstellen</button>
+      <button (click)="refreshUsers()" matTooltip="Aktualisieren" mat-icon-button>
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </data-table-actions>
+
+    <data-table-no-data>
+      <mat-icon>info</mat-icon>
+      Es wurden keine Nutzer gefunden!
+    </data-table-no-data>
+
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef>
+        <div class="header-cell-wrapper">E-Mail</div>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let user">
+        <div class="mat-cell-wrapper">
+          <ng-container *ngIf="!user.canLogin">
+            <mat-chip-list>
+              <mat-chip color="warn" (click)="toggleUser(user)" selected>
+                <mat-icon>info</mat-icon>
+                Anmeldung deaktiviert
+              </mat-chip>
+            </mat-chip-list>
+          </ng-container>
+          <span matTooltip="{{ user.email }}">{{ user.email }}</span>
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="firstName">
+      <mat-header-cell *matHeaderCellDef>
+        <div class="header-cell-wrapper">Vorname</div>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let user">
+        <div class="mat-cell-wrapper">
+          {{ user.firstName }}
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="lastName">
+      <mat-header-cell *matHeaderCellDef>
+        <div class="header-cell-wrapper">Nachname</div>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let user">
+        <div class="mat-cell-wrapper">
+          {{ user.lastName }}
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="lastLogin">
+      <mat-header-cell *matHeaderCellDef>
+        <div class="header-cell-wrapper">Letzte Anmeldung</div>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let user">
+        <div class="mat-cell-wrapper" matTooltip="{{ user.lastLogin | date: 'medium' }} Uhr">
+          {{ user.lastLogin | date: 'short' }}
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="_id">
+      <mat-header-cell *matHeaderCellDef>
+        <div class="header-cell-wrapper">Nutzer-UID</div>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let user">
+        <div class="mat-cell-wrapper" matTooltip="{{ user._id }}">
+          {{ user._id }}
+        </div>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let user">
+        <button class="copy-button" matTooltip="UID kopieren" (click)="copyUserId()" [cdkCopyToClipboard]="user._id"
+          mat-icon-button>
+          <mat-icon>content_copy</mat-icon>
+        </button>
+        <button [matMenuTriggerFor]="menu" matTooltip="Weitere Optionen anzeigen" mat-icon-button>
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button *ngIf="user.canLogin" (click)="editUserPassword(user)" mat-menu-item>
+            <mat-icon>password</mat-icon>
+            <span>Passwort zurücksetzen</span>
+          </button>
+          <button (click)="editUser(user)" mat-menu-item>
+            <mat-icon>edit</mat-icon>
+            <span>Bearbeiten</span>
+          </button>
+          <button (click)="toggleUser(user)" mat-menu-item>
+            <mat-icon>{{ user.canLogin ? 'visibility_off' : 'visibility' }}</mat-icon>
+            <span>{{ user.canLogin ? 'Deaktivieren' : 'Aktivieren' }}</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button (click)="deleteUser(user)" mat-menu-item>
+            <mat-icon>delete_forever</mat-icon>
+            <span>Nutzer löschen</span>
+          </button>
+        </mat-menu>
+      </mat-cell>
+    </ng-container>
+  </data-table>
+</div>

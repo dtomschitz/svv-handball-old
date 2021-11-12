@@ -1,0 +1,22 @@
+<ng-container *ngxLet="loading$ as loading">
+  <ng-container *ngxLet="error$ as error">
+    <ng-container *ngxLet="hasMore$ as hasMore">
+      <ng-container *ngxLet="articles$ as articles">
+        <article *ngFor="let article of articles; trackBy: trackByFn" [article]="article"></article>
+        <callout *ngIf="articles.length === 0 && !error" type="INFO">
+          Es wurden keine Berichte gefunden.
+        </callout>
+      </ng-container>
+      <ng-container *ngIf="loading && !error">
+        <article [loading]="true"></article>
+        <article [loading]="true"></article>
+      </ng-container>
+      <button *ngIf="!loading && hasMore" class="readmore" class="loadmore" (click)="loadArticles()" mat-stroked-button>
+        <span>Weitere Berichte laden</span>
+      </button>
+      <callout *ngIf="error" type="WARN">
+        Berichte konnten nicht geladen werden!
+      </callout>
+    </ng-container>
+  </ng-container>
+</ng-container>

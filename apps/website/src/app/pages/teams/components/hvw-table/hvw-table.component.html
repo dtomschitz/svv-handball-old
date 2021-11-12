@@ -1,0 +1,91 @@
+<ng-container *ngIf="classId; else noClassId">
+  <ng-container *ngIf="loading$ | async; else loaded">
+    <mat-card class="hvw-table mat-elevation-z3">
+      <mat-card-content>
+        <div>
+          <div class="row head">
+            <div class="_score">#</div>
+            <div class="_team">Mannschaft</div>
+            <div class="_games">Spiele</div>
+            <div class="_s">S</div>
+            <div class="_s _u">U</div>
+            <div class="_s">N</div>
+            <div class="_goals">Tore</div>
+            <div class="_points">Punkte</div>
+          </div>
+          <mat-divider></mat-divider>
+          <div *ngFor="let score of emptyArray(12); let i = index" class="row">
+            <div class="score">
+              <shimmer-placeholder></shimmer-placeholder>
+            </div>
+            <div class="team">
+              <shimmer-placeholder></shimmer-placeholder>
+            </div>
+            <div class="games">
+              <shimmer-placeholder></shimmer-placeholder>
+            </div>
+            <div class="s">
+              <shimmer-placeholder></shimmer-placeholder>
+            </div>
+            <div class="s u">
+              <shimmer-placeholder></shimmer-placeholder>
+            </div>
+            <div class="s">
+              <shimmer-placeholder></shimmer-placeholder>
+            </div>
+            <div class="goals">
+              <shimmer-placeholder></shimmer-placeholder>
+            </div>
+            <div class="points">
+              <shimmer-placeholder></shimmer-placeholder>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+  <ng-template #loaded>
+    <ng-container *ngIf="error$ | async as error; else noError">
+      <callout type="WARN">
+        Die Tabelle konnte nicht geladen werden!
+      </callout>
+    </ng-container>
+    <ng-template #noError>
+      <mat-card *ngxLet="table$ as table" class="hvw-table mat-elevation-z3">
+        <mat-card-content>
+          <div>
+            <div class="row head">
+              <div class="_score">#</div>
+              <div class="_team">Mannschaft</div>
+              <div class="_games">Spiele</div>
+              <div class="_s">S</div>
+              <div class="_s _u">U</div>
+              <div class="_s">N</div>
+              <div class="_goals">Tore</div>
+              <div class="_points">Punkte</div>
+            </div>
+            <mat-divider></mat-divider>
+            <div *ngFor="let score of table?.scores" class="row"
+              [ngClass]="{ highlighted: isHomeTeam(score.teamName) }">
+              <div class="score">{{ score.position }}</div>
+              <div class="team"><span>{{ score.teamName }}</span></div>
+              <div class="games">{{ score.games.played }}</div>
+              <div class="s">{{ score.games.won }}</div>
+              <div class="s u">{{ score.games.equal }}</div>
+              <div class="s">{{ score.games.lost }}</div>
+              <div class="goals">
+                {{ score.goals.shot }}:{{ score.goals.got }}
+              </div>
+              <div class="points">{{ score.points.plus }}:{{ score.points.minus }}</div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </ng-template>
+  </ng-template>
+</ng-container>
+<ng-template #noClassId>
+  <callout type="INFO">
+    Für diese Mannschaft ist keine Tabelle hinterlegt.
+  </callout>
+</ng-template>

@@ -1,0 +1,66 @@
+<div class="google-maps" [style.height]="height">
+  <div class="google-maps-placeholder">
+    <shimmer-placeholder></shimmer-placeholder>
+  </div>
+  <ng-container *ngIf="isBrowser && center && markerPosition">
+    <google-map [width]="width" [height]="height" [center]="center" [zoom]="zoom">
+      <map-marker [position]="markerPosition" [options]="markerOptions"></map-marker>
+    </google-map>
+  </ng-container>
+</div>
+<ng-container *ngIf="loading; else loaded">
+  <mat-list>
+    <mat-list-item class="gym-info">
+      <mat-icon mat-list-icon>map</mat-icon>
+      <div class="name" mat-line>
+        <shimmer-placeholder></shimmer-placeholder>
+      </div>
+      <div class="town" mat-line>
+        <shimmer-placeholder></shimmer-placeholder>
+      </div>
+      <div class="street" mat-line>
+        <shimmer-placeholder></shimmer-placeholder>
+      </div>
+      <a *ngIf="!smallOpenGoogleMapsButton" mat-stroked-button disabled>
+        Google Maps öffnen
+      </a>
+      <a *ngIf="smallOpenGoogleMapsButton" mat-icon-button disabled>
+        <mat-icon>navigation</mat-icon>
+      </a>
+    </mat-list-item>
+    <mat-list-item class="passings">
+      <mat-icon mat-list-icon>info</mat-icon>
+      <div class="permit" mat-line>
+        <shimmer-placeholder></shimmer-placeholder>
+      </div>
+      <div class="permit" mat-line>
+        <shimmer-placeholder></shimmer-placeholder>
+      </div>
+      <div class="wax" mat-line>
+        <shimmer-placeholder></shimmer-placeholder>
+      </div>
+    </mat-list-item>
+  </mat-list>
+</ng-container>
+<ng-template #loaded>
+  <mat-list>
+    <mat-list-item class="gym-info">
+      <mat-icon mat-list-icon>map</mat-icon>
+      <div class="name" mat-line>{{ gymInfo.name }}</div>
+      <div class="town" mat-line>{{ gymInfo.town }}</div>
+      <div class="street" mat-line>{{ gymInfo.street }}</div>
+      <a *ngIf="!smallOpenGoogleMapsButton" [href]="googleMapsURL" mat-stroked-button>
+        Google Maps öffnen
+      </a>
+      <a *ngIf="smallOpenGoogleMapsButton" [href]="googleMapsURL" mat-icon-button>
+        <mat-icon>navigation</mat-icon>
+      </a>
+    </mat-list-item>
+    <mat-list-item class="passings">
+      <mat-icon mat-list-icon>info</mat-icon>
+      <div class="permit" mat-line>{{ gymInfo.permit_org_1 }}</div>
+      <div class="permit" mat-line>{{ gymInfo.permit_org_2 }}</div>
+      <div class="wax" mat-line>{{ gymInfo.wax }}</div>
+    </mat-list-item>
+  </mat-list>
+</ng-template>

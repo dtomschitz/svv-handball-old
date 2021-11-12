@@ -1,0 +1,16 @@
+:host {
+  display: block;
+  height: 72px;
+
+  &.dense {
+    height: 48px !important;
+  }
+}
+
+a {
+  height: inherit !important;
+}
+
+.secondary {
+  color: var(--text-inactive);
+}

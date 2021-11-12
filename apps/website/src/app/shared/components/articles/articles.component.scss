@@ -1,0 +1,23 @@
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.loadmore {
+  align-self: center;
+  max-width: 250px;
+  width: 100%;
+  margin: 20px 16px 36px 16px;
+  border-radius: 50px;
+}
+
+callout {
+  display: block;
+  margin: 36px 16px;
+}

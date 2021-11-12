@@ -1,0 +1,61 @@
+<ng-container *ngIf="loading; else loaded">
+  <div class="article-header">
+    <div class="article-header-container">
+      <div class="article-title">
+        <shimmer-placeholder></shimmer-placeholder>
+      </div>
+    </div>
+    <div class="article-subtitle">
+      <shimmer-placeholder></shimmer-placeholder>
+    </div>
+    <div class="article-chips">
+      <shimmer-placeholder></shimmer-placeholder>
+      <shimmer-placeholder></shimmer-placeholder>
+      <shimmer-placeholder></shimmer-placeholder>
+    </div>
+    <div class="article-content"></div>
+  </div>
+  <div class="article-actions">
+  </div>
+</ng-container>
+<ng-template #loaded>
+  <div class="article-header">
+    <div class="article-header-container">
+      <div *ngIf="article.title" class="article-title">
+        {{ article.title }}
+      </div>
+      <mat-icon class="article-pinned" *ngIf="article.pinned">bookmark</mat-icon>
+    </div>
+    <div *ngIf="article?.authors && article.authors.length !== 0" class="article-subtitle">
+      von {{ authors }}
+    </div>
+    <mat-chip-list class="article-chips" *ngIf="article.authors || article.categories">
+      <mat-chip *ngIf="article.date" class="date" [disableRipple]="true">
+        <mat-icon>event</mat-icon>
+        <span>{{ article.date | date }}</span>
+      </mat-chip>
+      <mat-chip *ngFor="let category of article?.categories" class="category" [class.clickable]="category?.link"
+        [disableRipple]="!category?.link" (click)="onCategoryClicked(category)">
+        {{ category.name }}
+      </mat-chip>
+    </mat-chip-list>
+  </div>
+  <ng-container *ngIf="article.readMore; else readMore">
+    <div class="article-content" [@expansion]="state">
+      <div *ngIf="isCollapsed" class="blur"></div>
+      <div class="text" [innerHTML]="article.content | sanitizeHtml">
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #readMore>
+    <div class="article-content">
+      <div class="text" [innerHTML]="article.content | sanitizeHtml">
+      </div>
+    </div>
+  </ng-template>
+  <div *ngIf="article.readMore" class="article-actions">
+    <button (click)="toggle()" mat-button>
+      {{ isCollapsed ? 'Weiterlesen' : 'Einklappen'}}
+    </button>
+  </div>
+</ng-template>

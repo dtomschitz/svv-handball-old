@@ -1,0 +1,42 @@
+<ng-container *ngxLet="loading$ as loading">
+  <ng-container *ngxLet="team$ as team">
+    <team-header [team]="team" [loading]="loading"></team-header>
+    <team-image [team]="team"></team-image>
+    <div class="team-tabs">
+      <mat-tab-group mat-stretch-tabs dynamicHeight>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="tab-icon">format_list_numbered</mat-icon>
+            Tabelle
+          </ng-template>
+          <ng-container>
+            <hvw-table *ngIf="team" [classId]="team?.classId"></hvw-table>
+          </ng-container>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="tab-icon">schedule</mat-icon>
+            Spielplan
+          </ng-template>
+          <ng-container>
+            <hvw-schedule *ngIf="team" [classId]="team?.classId"></hvw-schedule>
+          </ng-container>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class=" tab-icon">article</mat-icon>
+            Berichte
+          </ng-template>
+          <ng-container>
+            <team-articles *ngIf="team" [articleCategoryId]="team?.articleCategoryId"></team-articles>
+          </ng-container>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+    <mat-list>
+      <team-coaches *ngIf="showCoaches(team)" [coaches]="team?.coaches"></team-coaches>
+      <training-times *ngIf="showTrainingTimes(team)" [trainingTimes]="team?.trainingTimes"></training-times>
+      <team-contact *ngIf="showContact(team)" [contact]="team?.contact"></team-contact>
+    </mat-list>
+  </ng-container>
+</ng-container>

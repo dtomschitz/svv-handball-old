@@ -1,0 +1,40 @@
+<dialog (closeDialog)="close()">
+  <dialog-title> Nutzer {{ canLogin ? 'deaktivieren' : 'aktivieren' }}</dialog-title>
+  <dialog-body>
+    <callout *ngIf="!canLogin" icon="info" type="INFO">
+      Nutzer mit aktivierten Konten können sich wieder anmelden
+    </callout>
+    <callout *ngIf="!canLogin && !hasEmailOrPassword" icon="warning" type="WARN">
+      Um diesen Nutzer zu aktivieren muss zusätzlich eine E-Mail und ein Passwort angegeben werden.
+    </callout>
+    <callout *ngIf="canLogin" icon="warning" type="WARN">
+      Nutzer mit deaktivierten Konten können sich nicht anmelden.
+    </callout>
+    <form *ngIf="!canLogin" [formGroup]="userForm" errorGroupName="toggleUser">
+      <mat-form-field *ngIf="!user.email">
+        <mat-label>E-Mail</mat-label>
+        <input formControlName="email" matInput />
+        <mat-error errorTailor></mat-error>
+      </mat-form-field>
+      <mat-form-field *ngIf="!user.password">
+        <mat-label>Passwort</mat-label>
+        <input formControlName="password" [type]="hidePassword ? 'password' : 'text'" matInput />
+        <button (click)="hidePassword = !hidePassword" mat-icon-button matSuffix>
+          <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <mat-error errorTailor></mat-error>
+      </mat-form-field>
+    </form>
+    <mat-list-item *ngIf="user.email">
+      <h4 matLine>Nutzerkonto</h4>
+      <p matLine>{{ user.email }}</p>
+    </mat-list-item>
+  </dialog-body>
+  <dialog-actions>
+    <button (click)="close()" mat-button>Abbrechen</button>
+    <button color="{{ canLogin ? 'warn' : 'primary'}}" (click)="toggleUser(user)"
+      [disabled]="!canLogin && invalidOrNotDirty" mat-flat-button>
+      {{ canLogin ? 'Deaktivieren' : 'Aktivieren' }}
+    </button>
+  </dialog-actions>
+</dialog>

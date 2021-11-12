@@ -1,0 +1,87 @@
+<div class="content-container">
+  <ng-container *ngrxLet="tags$ as tags">
+    <data-table [data]=" images" [loading]="loading$ | ngrxPush" [displayedColumns]="displayedColumns"
+      [expandable]="true" (rowExpanded)="onRowExpanded($event)" searchPlaceholder="Nach Name oder Bild-ID suchen"
+      matSort>
+      <data-table-actions>
+        <mat-form-field *ngIf="!disableFilter" class="filter" appearance="outline" floatLabel="never">
+          <mat-select [formControl]="filterControl">
+            <mat-option (click)="createImageTag()">
+              <mat-icon>add</mat-icon>
+              <span>Neuen Tag hinzufügen</span>
+            </mat-option>
+            <mat-option *ngFor="let tag of filterTags" [value]="tag._id">
+              {{ tag.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button color="primary" (click)="createImage(tags)" mat-flat-button>
+          Bild hochladen
+        </button>
+        <button (click)="refreshImages()" matTooltip="Aktualisieren" mat-icon-button>
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </data-table-actions>
+
+      <data-table-no-data>
+        <mat-icon>info</mat-icon>
+        Es wurden keine Bilder gefunden!
+      </data-table-no-data>
+
+      <data-table-details>
+        <ng-container *ngIf="expandedImage as image">
+          <image-details [image]="image"></image-details>
+        </ng-container>
+      </data-table-details>
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef>
+          <div class="header-cell-wrapper">Name</div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let image">
+          <div class="mat-cell-wrapper">
+            {{ image.name }}
+          </div>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="_id">
+        <mat-header-cell *matHeaderCellDef>
+          <div class="header-cell-wrapper">Bild-UID</div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let image">
+          <div class="mat-cell-wrapper" matTooltip="{{ image._id }}">
+            {{ image._id }}
+          </div>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let image">
+          <button (click)="copyImageId($event)" [cdkCopyToClipboard]="image._id" matTooltip="UID kopieren"
+            mat-icon-button>
+            <mat-icon>content_copy</mat-icon>
+          </button>
+          <button (click)="preventDefault($event)" [matMenuTriggerFor]="menu" matTooltip="Weitere Optionen anzeigen"
+            mat-icon-button>
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button (click)="editImage(image, tags)" mat-menu-item>
+              <mat-icon>edit</mat-icon>
+              <span>Bearbeiten</span>
+            </button>
+            <button (click)="toggleImage(image)" mat-menu-item>
+              <mat-icon>{{ image.disabled ? 'visibility' : 'visibility_off' }}</mat-icon>
+              <span>{{ image.disabled ? 'Aktivieren' : 'Deaktivieren' }}</span>
+            </button>
+            <mat-divider></mat-divider>
+            <button (click)="deleteImage(image)" mat-menu-item>
+              <mat-icon>delete_forever</mat-icon>
+              <span>Löschen</span>
+            </button>
+          </mat-menu>
+        </mat-cell>
+      </ng-container>
+    </data-table>
+  </ng-container>
+</div>

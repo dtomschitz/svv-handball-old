@@ -1,0 +1,48 @@
+.dialog-body {
+  display: flex;
+  overflow: hidden;
+  height: 100%;
+}
+
+.dialog-container {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+.preview-container {
+  width: 50%;
+  margin-left: 24px;
+  overflow: auto;
+  padding: 8px;
+}
+
+form {
+  height: 100%;
+  width: 50%;
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  .quill-editor {
+    display: block;
+    .ql-container {
+      overflow: scroll !important;
+    }
+  }
+
+  textarea,
+  .quill-editor {
+    height: 400px;
+  }
+
+  textarea {
+    resize: none;
+  }
+}
+
+.ql-snow.ql-toolbar button,
+.ql-snow .ql-toolbar button {
+  padding: 0;
+}

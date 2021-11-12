@@ -1,0 +1,38 @@
+<dialog (closeDialog)="close()">
+  <dialog-title> Ansprechpartner {{ isCreateDialog ? 'erstellen' : 'bearbeiten' }} </dialog-title>
+  <dialog-body>
+    <form autocomplete="off" [formGroup]="contactPersonForm" errorGroupName="createOrEditContactPerson">
+      <mat-form-field class="name">
+        <mat-label>Name</mat-label>
+        <input formControlName="name" matInput />
+        <mat-error errorTailor></mat-error>
+      </mat-form-field>
+      <mat-form-field class="email">
+        <mat-label>E-Mail</mat-label>
+        <input formControlName="email" matInput />
+        <mat-error errorTailor></mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select formControlName="categoryId" placeholder="Kategorie" [multiple]="false">
+          <mat-option>
+            <ngx-mat-select-search [formControl]="categorySearchControl" placeholderLabel="Kategorie auswählen..."
+              noEntriesFoundLabel="Es wurde keine Kategorie gefunden">
+            </ngx-mat-select-search>
+          </mat-option>
+          <mat-option *ngFor="let category of filteredCategories$ | async" [value]="category._id">
+            {{ category.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <editable-list label="Namen" placeholder="Name erstellen" formControlName="people"></editable-list>
+    </form>
+  </dialog-body>
+  <dialog-actions>
+    <button (click)="close()" mat-button>Abbrechen</button>
+    <button color="primary" [mat-dialog-close]="contactPersonForm.value" [disabled]="invalidOrNotDirty" mat-flat-button>
+      Speichern
+    </button>
+  </dialog-actions>
+</dialog>

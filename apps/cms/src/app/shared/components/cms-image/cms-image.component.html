@@ -1,0 +1,22 @@
+<div class="drop-zone" [class.drop-zone-border]="showDragAndDrop" (fileDropped)="onFileDropped($event)"
+  (dragEnter)="onDragEnter()" (dragLeave)="onDragLeave()" fileDragAndDrop>
+  <mat-icon>cloud_upload</mat-icon>
+  <span>Bild hierher ziehen oder...</span>
+  <input #fileDropRef type="file" (change)="handleFileBrowserChange($event.target.files)"
+    [accept]="accept.join(', ')" />
+  <button class="drop-zone-button" (click)="openFileBrowser()" mat-button>
+    Auf dem Gerät gespeicherte Date auswählen
+  </button>
+</div>
+<ng-container *ngIf="image">
+  <mat-list>
+    <mat-list-item class="image">
+      <mat-icon mat-list-icon>photo</mat-icon>
+      <div mat-line>{{ image.name }}</div>
+      <div class="size" mat-line>{{ image.size | fileSize }}</div>
+      <button (click)="removeImage()" mat-icon-button>
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-list-item>
+  </mat-list>
+</ng-container>

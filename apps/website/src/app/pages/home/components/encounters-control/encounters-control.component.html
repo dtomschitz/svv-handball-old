@@ -1,0 +1,28 @@
+<ng-container *ngxLet="gameWeek$ as gameWeek">
+  <button class="week" (click)="loadWeek(gameWeek.weeks.current)" [disabled]="!gameWeek?.weeks?.current" mat-button>
+    Diese Woche
+  </button>
+  <button (click)="loadWeek(gameWeek.weeks.previous)" [disabled]="!gameWeek?.weeks?.previous" mat-icon-button>
+    <mat-icon>chevron_left</mat-icon>
+  </button>
+  <button (click)="loadWeek(gameWeek.weeks.next)" [disabled]="!gameWeek?.weeks?.next" mat-icon-button>
+    <mat-icon>chevron_right</mat-icon>
+  </button>
+  <div class="daterange">
+    <ng-container *ngIf="!gameWeek?.weeks?.selected; else weekLoaded">
+      <shimmer-placeholder></shimmer-placeholder>
+    </ng-container>
+    <ng-template #weekLoaded>
+      <mat-chip-list>
+        <mat-chip disableRipple>
+          <mat-icon>date_range</mat-icon>
+          {{ gameWeek.weeks.selected | dateRange }}
+        </mat-chip>
+      </mat-chip-list>
+    </ng-template>
+  </div>
+  <div class="flex-spacer"></div>
+  <button (click)="loadWeek(gameWeek.weeks.selected, true)" [disabled]="!gameWeek?.weeks?.selected" mat-icon-button>
+    <mat-icon>autorenew</mat-icon>
+  </button>
+</ng-container>

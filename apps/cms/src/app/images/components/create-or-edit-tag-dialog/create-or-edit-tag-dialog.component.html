@@ -1,0 +1,21 @@
+<dialog class="dialog" (closeDialog)="close()">
+  <dialog-title>Tag {{ isCreateDialog ? 'erstellen' : 'bearbeiten' }}</dialog-title>
+  <dialog-body>
+    <form autocomplete="off" [formGroup]="tagForm" errorGroupName="createOrEditTag">
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input formControlName="name" matInput />
+        <mat-error errorTailor></mat-error>
+      </mat-form-field>
+      <mat-slide-toggle color="primary" formControlName="isSeasonTag">
+        Saison Tag
+      </mat-slide-toggle>
+    </form>
+  </dialog-body>
+  <dialog-actions>
+    <button (click)="close()" mat-button>Abbrechen</button>
+    <button color="primary" [disabled]="invalidOrNotDirty" [mat-dialog-close]="tagForm.value" mat-flat-button>
+      Speichern
+    </button>
+  </dialog-actions>
+</dialog>

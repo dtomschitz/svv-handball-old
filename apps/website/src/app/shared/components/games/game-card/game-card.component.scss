@@ -1,0 +1,118 @@
+@import '~@angular/material/theming';
+
+:host {
+  display: block;
+  margin: 16px;
+}
+
+mat-card {
+  display: flex;
+  flex: 1;
+  height: 48px;
+  border-radius: 16px;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  .datetime {
+    mat-icon {
+      @media screen and (max-width: 360px) {
+        display: none;
+        visibility: hidden;
+      }
+    }
+
+    mat-icon {
+      margin-right: 8px;
+    }
+
+    span {
+      margin-right: 16px;
+    }
+
+    .class {
+      font-weight: 400;
+    }
+
+    .live {
+      background-color: #00c853;
+      color: white;
+      font-weight: bold;
+      font-size: 16px;
+      justify-content: center;
+      border-radius: 50px;
+      margin-right: 16px;
+
+      mat-icon {
+        height: 16;
+      }
+    }
+
+    .live,
+    .date,
+    .time,
+    .class {
+      display: flex;
+      align-items: center;
+      height: 24px;
+
+      span {
+        min-width: 67px;
+
+        shimmer-placeholder {
+          height: 16px;
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .teams {
+    flex: 1;
+    margin-right: 16px;
+
+    .team {
+      display: flex;
+      align-items: center;
+      height: 24px;
+
+      shimmer-placeholder {
+        height: 16px;
+        max-width: 215px;
+        width: 100%;
+      }
+    }
+
+    .highlighted {
+      font-weight: bold;
+    }
+  }
+
+  .score {
+    font-size: 16px;
+    font-weight: bold;
+    min-width: 28px;
+    align-items: end;
+
+    span {
+      display: flex;
+      align-items: center;
+      height: 24px;
+      text-align: right;
+
+      shimmer-placeholder {
+        height: 16px;
+        width: 100%;
+      }
+    }
+  }
+
+  .datetimeclass,
+  .teams,
+  .score {
+    display: flex;
+    flex-direction: column;
+    line-height: 24px;
+  }
+}

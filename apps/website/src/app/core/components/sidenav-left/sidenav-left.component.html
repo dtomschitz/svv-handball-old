@@ -1,0 +1,81 @@
+<sidenav>
+  <sidenav-section>
+    <sidenav-button (navigate)="navigateTo('/')">
+      <mat-icon>home</mat-icon>
+      Startseite
+    </sidenav-button>
+    <sidenav-button (navigate)="navigateTo('/sponsoren')">
+      <mat-icon>
+        support
+      </mat-icon>
+      Sponsoren
+    </sidenav-button>
+    <sidenav-button (navigate)="navigateTo('/orga-team')">
+      <mat-icon>
+        engineering
+      </mat-icon>
+      Orga-Team
+    </sidenav-button>
+    <sidenav-button (navigate)="navigateTo('/ansprechpartner')">
+      <mat-icon>groups</mat-icon>
+      Ansprechpartner
+    </sidenav-button>
+    <sidenav-button (navigate)="navigateTo('/downloads')">
+      <mat-icon>download</mat-icon>
+      Downloads
+    </sidenav-button>
+  </sidenav-section>
+  <sidenav-section>
+    <sidenav-section-heading>Aktive Mannschaften</sidenav-section-heading>
+    <sidenav-button *ngFor="let team of activeTeams$ | async; trackBy: trackByFn"
+      (navigate)="navigateToTeam(team.abbreviation)" [loading]="!team">
+      <lazy-image [lazyImage]="getTeamImagePath(team?._id)" [imageRatio]="36/36">
+        <lazy-image-placeholder>
+          <shimmer-placeholder></shimmer-placeholder>
+        </lazy-image-placeholder>
+      </lazy-image>
+      {{ team?.name }}
+    </sidenav-button>
+  </sidenav-section>
+  <sidenav-section>
+    <sidenav-section-heading>Jugend Mannschaften</sidenav-section-heading>
+    <sidenav-button *ngFor="let team of maleYouthTeams$ | async; trackBy: trackByFn"
+      (navigate)="navigateToTeam(team.abbreviation)" [loading]="!team">
+      <lazy-image [lazyImage]="getTeamImagePath(team?._id)" [imageRatio]="36/36">
+        <lazy-image-placeholder>
+          <shimmer-placeholder></shimmer-placeholder>
+        </lazy-image-placeholder>
+        <lazy-image-error-placeholder>
+          <div class="error-team-image"></div>
+        </lazy-image-error-placeholder>
+      </lazy-image>
+      {{ team?.name }}
+    </sidenav-button>
+    <div class="spacer"></div>
+    <sidenav-button *ngFor="let team of femaleYouthTeams$ | async; trackBy: trackByFn"
+      (navigate)="navigateToTeam(team.abbreviation)" [loading]="!team">
+      <lazy-image [lazyImage]="getTeamImagePath(team?._id)" [imageRatio]="36/36">
+        <lazy-image-placeholder>
+          <shimmer-placeholder></shimmer-placeholder>
+        </lazy-image-placeholder>
+        <lazy-image-error-placeholder>
+          <div class="error-team-image"></div>
+        </lazy-image-error-placeholder>
+      </lazy-image>
+      {{ team?.name }}
+    </sidenav-button>
+    <div class="spacer"></div>
+    <sidenav-button *ngFor="let team of mixedYouthTeams$ | async" (navigate)="navigateToTeam(team.abbreviation)"
+      [loading]="!team">
+      <lazy-image [lazyImage]="getTeamImagePath(team?._id)" [imageRatio]="36/36">
+        <lazy-image-placeholder>
+          <shimmer-placeholder></shimmer-placeholder>
+        </lazy-image-placeholder>
+        <lazy-image-error-placeholder>
+          <div class="error-team-image"></div>
+        </lazy-image-error-placeholder>
+      </lazy-image>
+      {{ team?.name }}
+    </sidenav-button>
+  </sidenav-section>
+</sidenav>

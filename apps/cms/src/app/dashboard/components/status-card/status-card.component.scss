@@ -1,0 +1,45 @@
+:host {
+  display: flex;
+  flex: 1;
+  margin: 24px;
+  height: 300px;
+  min-width: 250px;
+  justify-content: flex-start;
+}
+
+mat-card {
+  ::ng-deep .mat-card-header {
+    .mat-card-header-text {
+      margin: 0;
+    }
+
+    .mat-card-title {
+      font-size: 24px !important;
+      line-height: normal;
+      margin-bottom: 8px !important;
+    }
+  }
+
+  mat-card-content {
+    .service {
+      display: flex;
+      justify-content: space-between;
+      margin: 16px 0;
+
+      .name {
+        font-weight: 500;
+        color: var(--text-active);
+      }
+
+      .status {
+        &.up {
+          color: green;
+        }
+
+        &.down {
+          color: red;
+        }
+      }
+    }
+  }
+}

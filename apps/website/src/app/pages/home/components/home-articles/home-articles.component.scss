@@ -1,0 +1,11 @@
+:host {
+  display: block;
+}
+
+h1 {
+  margin: 0;
+}
+
+::ng-deep callout {
+  margin: 36px 0 !important;
+}

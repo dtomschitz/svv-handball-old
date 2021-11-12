@@ -1,0 +1,112 @@
+<div class="content-container">
+  <data-table [data]="articles" [loading]="loading$ | ngrxPush" [displayedColumns]="displayedColumns"
+    searchPlaceholder="Nach Titel oder Bericht-ID suchen" matSort>
+    <data-table-actions>
+      <ng-container *ngrxLet="categories$ as categories">
+        <ng-container *ngrxLet="authors$ as authors">
+          <button color="primary" (click)="createArticle(categories, authors)" mat-flat-button>
+            Bericht erstellen
+          </button>
+        </ng-container>
+      </ng-container>
+      <button (click)="refreshArticles()" matTooltip="Aktualisieren" mat-icon-button>
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </data-table-actions>
+
+    <data-table-no-data>
+      <mat-icon>info</mat-icon>
+      Es wurden keine Berichte gefunden!
+    </data-table-no-data>
+
+    <ng-container matColumnDef="title">
+      <mat-header-cell *matHeaderCellDef>
+        <div class="header-cell-wrapper">Titel</div>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let article">
+        <div class="mat-cell-wrapper">
+          <ng-container *ngIf="article.pinned">
+            <button (click)="unpinArticle(article)" class="pinned" mat-icon-button>
+              <mat-icon>bookmark</mat-icon>
+            </button>
+          </ng-container>
+          <ng-container *ngIf="article.disabled">
+            <mat-chip-list>
+              <mat-chip color="warn" (click)="toggleArticle(article)" selected>
+                <mat-icon>info</mat-icon>
+                Versteckt
+              </mat-chip>
+            </mat-chip-list>
+          </ng-container>
+          <span>{{ article.title }}</span>
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="subtitle">
+      <mat-header-cell *matHeaderCellDef>
+        <div class="header-cell-wrapper">Untertitel</div>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let article">
+        <div class="mat-cell-wrapper">
+          {{ article.subtitle }}
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="date">
+      <mat-header-cell *matHeaderCellDef>
+        <div class="header-cell-wrapper">Datum</div>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let article">
+        <div class="mat-cell-wrapper">
+          {{ article.date | date: 'short' }} Uhr
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="_id">
+      <mat-header-cell *matHeaderCellDef>
+        <div class="header-cell-wrapper">Artikel-UID</div>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let article">
+        <div class="mat-cell-wrapper">
+          {{ article._id }}
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell class="actions-cell" *matCellDef="let article">
+        <button class="copy-button" (click)="copyArticleId($event)" matTooltip="UID kopieren"
+          [cdkCopyToClipboard]="article._id" mat-icon-button>
+          <mat-icon>content_copy</mat-icon>
+        </button>
+        <button (click)="preventDefault($event)" [matMenuTriggerFor]="menu" matTooltip="Weitere Optionen anzeigen"
+          mat-icon-button>
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <ng-container *ngrxLet="categories$ as categories">
+            <ng-container *ngrxLet="authors$ as authors">
+              <button (click)="editArticle(article, categories, authors)" mat-menu-item>
+                <mat-icon>edit</mat-icon>
+                <span>Bearbeiten</span>
+              </button>
+            </ng-container>
+          </ng-container>
+          <button (click)="toggleArticle(article)" mat-menu-item>
+            <mat-icon>{{ article.disabled ? 'visibility' : 'visibility_off' }}</mat-icon>
+            <span>{{ article.disabled ? 'Veröffentlichen' : 'Verstecken' }}</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button (click)="deleteArticle(article)" mat-menu-item>
+            <mat-icon>delete_forever</mat-icon>
+            <span>Löschen</span>
+          </button>
+        </mat-menu>
+      </mat-cell>
+    </ng-container>
+  </data-table>
+</div>

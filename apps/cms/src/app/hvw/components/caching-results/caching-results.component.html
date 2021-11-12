@@ -1,0 +1,71 @@
+<cms-history *ngIf="loading">
+  <cms-history-list (selectionChange)="onSelectionChange($event)">
+    <cms-history-item *ngFor="let item of emptyArray(5); let first = first; let last = last;" [isFirst]="first"
+      [isLast]="last">
+      <shimmer-placeholder></shimmer-placeholder>
+    </cms-history-item>
+  </cms-history-list>
+  <cms-history-content>
+    <div class="title-container">
+      <div class="title">
+        <shimmer-placeholder></shimmer-placeholder>
+      </div>
+      <div class="subtitle">
+        <shimmer-placeholder></shimmer-placeholder>
+      </div>
+    </div>
+    <div class="content">
+      <div *ngFor="let metric of emptyArray(3)" class="metric">
+        <div class="label">
+          <shimmer-placeholder></shimmer-placeholder>
+        </div>
+        <div class="count">
+          <shimmer-placeholder></shimmer-placeholder>
+        </div>
+      </div>
+    </div>
+  </cms-history-content>
+</cms-history>
+<cms-history *ngIf="!loading && cachingResults.length !== 0">
+  <cms-history-list (selectionChange)="onSelectionChange($event)">
+    <cms-history-item *ngFor="let cachingResult of cachingResults let first = first; let last = last" [isFirst]="first"
+      [isLast]="last">
+      {{ cachingResult.createdAt | date: 'dd.MM.yyyy, h:mm:ss a'}}
+    </cms-history-item>
+  </cms-history-list>
+  <cms-history-content>
+    <ng-container *ngIf=" cachingResult">
+      <div class="title-container">
+        <div class="title">
+          Aktualisierung vom {{ cachingResult.createdAt | date: 'dd.MM.yyyy, h:mm:ss a' }}
+        </div>
+        <div class="subtitle">
+          <ng-container *ngIf="cachingResult.user as user; else noUser">
+            Von {{ user.firstName }} {{ user.lastName }} gestartet
+          </ng-container>
+          <ng-template #noUser>Automatisch gestartet</ng-template>
+        </div>
+      </div>
+      <div class="content">
+        <div class="metric">
+          <div class="label">
+            Gesamtanzahl der hinzugefügten Dokumente
+          </div>
+          <div class="count">{{ cachingResult.inserted }}</div>
+        </div>
+        <div class="metric">
+          <div class="label">
+            Gesamtanzahl der modifizierten Dokumente
+          </div>
+          <div class="count">{{ cachingResult.modified }}</div>
+        </div>
+        <div class="metric">
+          <div class="label">
+            Gesamtanzahl der gelöschten Dokumente
+          </div>
+          <div class="count">{{ cachingResult.removed }}</div>
+        </div>
+      </div>
+    </ng-container>
+  </cms-history-content>
+</cms-history>

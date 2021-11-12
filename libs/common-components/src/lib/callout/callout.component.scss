@@ -1,0 +1,48 @@
+:host {
+  display: block;
+}
+
+.callout {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  position: relative;
+  min-height: 48px;
+  margin-bottom: 16px;
+}
+
+.callout-info {
+  color: #476282;
+  background-color: #e5eaf0;
+
+  mat-icon {
+    color: #476282;
+  }
+}
+
+.callout-warn {
+  color: #f44336;
+  background-color: #fbe9e7;
+
+  mat-icon {
+    color: #f44336;
+  }
+}
+
+.callout-body {
+  display: flex;
+  margin: 16px;
+  line-height: 20px;
+  font-size: 14px;
+  white-space: normal;
+
+  mat-icon {
+    margin-right: 16px;
+  }
+}
+
+.callout-message {
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}

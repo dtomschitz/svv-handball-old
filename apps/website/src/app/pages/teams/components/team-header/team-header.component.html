@@ -1,0 +1,18 @@
+<div class="team-header">
+  <h1 class="name">
+    <ng-container *ngIf="loading">
+      <shimmer-placeholder></shimmer-placeholder>
+    </ng-container>
+    <ng-container *ngIf="!loading">
+      {{ team?.name }}
+    </ng-container>
+  </h1>
+  <h2 class="class">
+    <ng-container *ngIf="!team?.class?.longName">
+      <shimmer-placeholder></shimmer-placeholder>
+    </ng-container>
+    <ng-container *ngIf="team && team?.class || team?.class === null">
+      {{ team?.class?.longName }}
+    </ng-container>
+  </h2>
+</div>

@@ -1,0 +1,46 @@
+<div class="sponsor-details-container">
+  <div class="sponsor-details-img">
+    <div class="sponsor-details-img-overlay">
+      <ng-container *ngIf="!sponsor?.img?.path">
+        <div class="sponsor-details-no-img">
+          <button (click)="editSponsorImage.emit()" mat-button>Bild hochladen</button>
+        </div>
+      </ng-container>
+      <div *ngIf="sponsor?.img?.path" class="sponsor-details-img-control">
+        <mat-chip-list *ngIf="sponsor?.img?.disabled">
+          <mat-chip color="warn" (click)="toggleSponsorImage.emit()" selected>
+            <mat-icon>info</mat-icon>
+            Bild deaktiviert
+          </mat-chip>
+        </mat-chip-list>
+        <div class="flex-spacer"></div>
+        <button class="menu" (click)="preventDefault($event)" [matMenuTriggerFor]="menu" mat-icon-button>
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button (click)="toggleSponsorImage.emit()" [disabled]="true" mat-menu-item>
+            <mat-icon>{{ sponsor?.img?.disabled ? 'visibility' : 'visibility_off' }}</mat-icon>
+            <span>Bild {{ sponsor?.img?.disabled ? 'aktivieren' : 'deaktivieren' }}</span>
+          </button>
+          <button (click)="editSponsorImage.emit()" mat-menu-item>
+            <mat-icon>edit</mat-icon>
+            <span>Bild bearbeiten</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button (click)="deleteSponsorImage.emit()" mat-menu-item>
+            <mat-icon>delete_forever</mat-icon>
+            <span>Bild löschen</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+    <img *ngIf="sponsor?.img?.path" [src]="imagePath">
+  </div>
+  <div class="sponsor-details">
+    <div class="title">
+      <span class="name">{{ sponsor.name }}</span>
+      <span class="link">{{ sponsor.link }}</span>
+    </div>
+    <div class="flex-spacer"></div>
+  </div>
+</div>

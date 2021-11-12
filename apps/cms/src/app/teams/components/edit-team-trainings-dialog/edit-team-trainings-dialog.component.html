@@ -1,0 +1,43 @@
+<dialog (closeDialog)="close()">
+  <dialog-title> Trainingszeiten bearbeiten </dialog-title>
+  <dialog-body>
+    <form class="create-training-time" autocomplete="off" [formGroup]="createTrainingTimeForm"
+      errorGroupName="createTrainingTime">
+      <mat-form-field class="location">
+        <mat-label>Halle</mat-label>
+        <input formControlName="location" matInput>
+      </mat-form-field>
+      <mat-form-field class="startTime">
+        <mat-label>Beginn</mat-label>
+        <input formControlName="startTime" type="time" matInput>
+      </mat-form-field>
+      <mat-form-field class="endTime">
+        <mat-label>Ende</mat-label>
+        <input formControlName="endTime" type="time" matInput>
+      </mat-form-field>
+      <button class="add-button" color="primary" (click)="addTrainingTime()" mat-stroked-button>
+        Hinzufügen
+      </button>
+    </form>
+
+    <mat-accordion class="training-times" (cdkDropListDropped)="drop($event)" cdkDropList>
+      <mat-expansion-panel class="training-time" *ngFor="let trainingTime of trainingTimes; let i = index"
+        cdkDragLockAxis="y" cdkDrag>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon class="drag" cdkDragHandle>drag_handle</mat-icon>
+            <span class="title">{{ trainingTime.location }}</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <edit-training-time [trainingTime]="trainingTime" (trainingTimeChange)="updateTrainingTime(i, $event)">
+        </edit-training-time>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </dialog-body>
+  <dialog-actions>
+    <button (click)="close()" mat-button>Abbrechen</button>
+    <button color="primary" (click)="save()" mat-flat-button>
+      Speichern
+    </button>
+  </dialog-actions>
+</dialog>

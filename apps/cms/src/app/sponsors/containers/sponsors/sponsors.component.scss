@@ -1,0 +1,51 @@
+.mat-column-position {
+  max-width: 36px;
+}
+
+.mat-column-_id {
+  max-width: 200px;
+}
+
+.mat-column-name {
+  flex-grow: 3;
+
+  .mat-cell-wrapper {
+    display: flex;
+    align-items: center;
+
+    mat-chip {
+      margin: 0 6px 0 0;
+    }
+
+    span {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}
+
+.mat-column-link {
+  flex-grow: 2;
+}
+
+.mat-column-actions {
+  max-width: 80px;
+}
+
+.disabled-sponsor {
+  opacity: 1;
+  margin-left: -16px;
+}
+
+.mat-column-position {
+  max-width: 36px;
+  overflow: visible;
+}
+
+.data-table-details {
+  display: flex;
+  flex: 1;
+  margin: 16px;
+}

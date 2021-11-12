@@ -1,0 +1,98 @@
+<div class="team-details-container">
+  <div class="team-details-img">
+    <img *ngIf="team.images" [src]="imagePath">
+    <div class="team-details-img-overlay">
+      <ng-container *ngIf="!team.images">
+        <div class="team-details-no-img">
+          <button (click)="editTeamImage.emit()" mat-button>Bild hochladen</button>
+        </div>
+      </ng-container>
+      <div *ngIf="team.images" class="team-details-img-control">
+        <mat-chip-list *ngIf="team.images.disabled">
+          <mat-chip color="warn" (click)="toggleTeamImage.emit()" selected>
+            <mat-icon>info</mat-icon>
+            Bild deaktiviert
+          </mat-chip>
+        </mat-chip-list>
+        <div class="flex-spacer"></div>
+        <button class="menu" [matMenuTriggerFor]="menu" mat-icon-button>
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button (click)="toggleTeamImage.emit()" mat-menu-item>
+            <mat-icon>{{ team.images.disabled ? 'visibility' : 'visibility_off' }}</mat-icon>
+            <span>Bild {{ team.images.disabled ? 'aktivieren' : 'deaktivieren' }}</span>
+          </button>
+          <button (click)="editTeamImage.emit()" mat-menu-item>
+            <mat-icon>edit</mat-icon>
+            <span>Bild bearbeiten</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button (click)="deleteTeamImage.emit()" mat-menu-item>
+            <mat-icon>delete_forever</mat-icon>
+            <span>Bild löschen</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+  </div>
+  <div class="team-details">
+    <div class="title">
+      <span class="name">{{ team.name }}</span>
+      <span class="abbreviation">({{ team.abbreviation }})</span>
+    </div>
+    <div class="flex-spacer"></div>
+    <mat-list>
+      <mat-list-item class="coaches">
+        <mat-icon mat-list-icon>group</mat-icon>
+        <div mat-line>Trainer</div>
+        <div mat-line>
+          <ng-container *ngIf="team.coachIds.length !== 0; else noCoaches">
+            {{ coachesNames | oxfordJoin }}
+          </ng-container>
+          <ng-template #noCoaches>
+            <mat-icon>close</mat-icon>
+            Keine Trainer ausgewählt
+          </ng-template>
+        </div>
+      </mat-list-item>
+      <mat-list-item class="training-times">
+        <mat-icon mat-list-icon>schedule</mat-icon>
+        <div mat-line>Trainingszeiten</div>
+        <div *ngFor="let trainingTime of team.trainingTimes" mat-line>
+          <div class="location">{{ trainingTime.location }}</div>
+          <div class="time">({{ trainingTime.startTime }} - {{ trainingTime.endTime }} Uhr)</div>
+        </div>
+        <div *ngIf="team.trainingTimes.length === 0" matLine>
+          <mat-icon>close</mat-icon>
+          Keine Trainingszeiten festgelegt.
+        </div>
+      </mat-list-item>
+      <mat-list-item class=" contact">
+        <mat-icon mat-list-icon>mail</mat-icon>
+        <div mat-line>Kontakt</div>
+        <div mat-line>
+          <ng-container *ngIf="team.contact; else noContact">
+            {{ team.contact }}
+          </ng-container>
+          <ng-template #noContact>
+            <mat-icon>close</mat-icon>
+            Kein Kontakt eingetragen
+          </ng-template>
+        </div>
+      </mat-list-item>
+      <mat-list-item class="settings">
+        <mat-icon mat-list-icon>settings</mat-icon>
+        <div mat-line>HVW Einstellungen</div>
+        <div mat-line>
+          <mat-icon>{{ team.settings.cacheGames ? 'check' : 'close' }}</mat-icon>
+          Alle Spiele der Mannschaft werden gespeichert
+        </div>
+        <div mat-line>
+          <mat-icon>{{ team.settings.cacheTable ? 'check' : 'close' }}</mat-icon>
+          Die Tabelle der Mannschaft wird gespeichert
+        </div>
+      </mat-list-item>
+    </mat-list>
+  </div>
+</div>

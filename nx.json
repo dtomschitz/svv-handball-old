@@ -1,0 +1,32 @@
+{
+  "npmScope": "svv-handball",
+  "implicitDependencies": {
+    "workspace.json": "*",
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
+    "tsconfig.base.json": "*",
+    ".eslintrc.json": "*",
+    "nx.json": "*"
+  },
+  "affected": {
+    "defaultBase": "master"
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/workspace/tasks-runners/default",
+      "options": {
+        "cacheableOperations": ["build", "lint", "test", "e2e"]
+      }
+    }
+  },
+  "projects": {
+    "api": { "tags": [] },
+    "cms": { "tags": [] },
+    "website": { "tags": [] },
+    "common-components": { "tags": [] },
+    "error-tailor": { "tags": [] },
+    "models": { "tags": [] }
+  }
+}
