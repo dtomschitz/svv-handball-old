@@ -25,12 +25,6 @@
   - [CMS](#CMS)
   - [Website](#Website)
 
-# Architecture
-
-<p align="center">
-  <img src="architecture.jpg" alt="Architecture" >
-</p>
-
 # Pre-Installation & Requirements
 
 In order to run the different apps the repository obvisously needs to get clone
